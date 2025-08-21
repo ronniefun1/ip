@@ -25,10 +25,20 @@ public class Reboot {
         int numTasks = 0;
 
         // Loop when input is not bye
-        while (!input.equals("bye")) {
+        while (true) {
             try {
-                switch (firstWord) {
-                    case "list": {
+                Actions action = Actions.valueOf(firstWord.toUpperCase());
+                switch (action) {
+                    case BYE: {
+                        // Close the Scanner
+                        scanner.close();
+
+                        System.out.println(solidLn +
+                                "    Bye. Rate 5 stars.\n" +
+                                solidLn);
+                    }
+                    return;
+                    case LIST: {
                         // If no tasks have been added, throw exception
                         if (numTasks == 0) {
                             throw new RebootException("list function is useless without any tasks");
@@ -44,8 +54,8 @@ public class Reboot {
                         }
                         System.out.println(solidLn);
                     }
-                        break;
-                    case "mark": {
+                    break;
+                    case MARK: {
                         // Throw exception if there is no index given
                         if (words.length == 1) {
                             throw new RebootException("Proper usage: mark {task index}");
@@ -67,8 +77,8 @@ public class Reboot {
                                 "      " + t + "\n" +
                                 solidLn);
                     }
-                        break;
-                    case "unmark": {
+                    break;
+                    case UNMARK: {
                         // Throw exception if there is no index given
                         if (words.length == 1) {
                             throw new RebootException("Proper usage: unmark {task index}");
@@ -92,7 +102,7 @@ public class Reboot {
                                 solidLn);
                     }
                     break;
-                    case "todo": {
+                    case TODO: {
                         // Throw exception when description of task not provided
                         if (words.length == 1) {
                             throw new RebootException("Proper usage: todo {description}");
@@ -108,7 +118,7 @@ public class Reboot {
                                 solidLn);
                     }
                     break;
-                    case "deadline": {
+                    case DEADLINE: {
                         // Throw exception when description of task not provided
                         if (words.length == 1) {
                             throw new RebootException("Proper usage: deadline {description} /by {due date}");
@@ -132,7 +142,7 @@ public class Reboot {
                                 solidLn);
                     }
                     break;
-                    case "event": {
+                    case EVENT: {
                         // Throw exception when description of task not provided
                         if (words.length == 1) {
                             throw new RebootException(
@@ -169,7 +179,7 @@ public class Reboot {
                                 solidLn);
                     }
                     break;
-                    case "delete": {
+                    case DELETE: {
                         // Throw exception if there is no index given
                         if (words.length == 1) {
                             throw new RebootException("Proper usage: delete {task index}");
@@ -194,10 +204,11 @@ public class Reboot {
                                 solidLn);
                     }
                         break;
-
-                    default:
-                        throw new RebootException("I don't quite understand your language");
                 }
+            }
+            catch (IllegalArgumentException e) {
+                System.out.println(solidLn + "    I don't quite understand your language\n" + solidLn);
+
             }
             catch (RebootException e) {
                 System.out.println(solidLn + "    " + e.getMessage() + "\n" + solidLn);
@@ -211,13 +222,6 @@ public class Reboot {
             firstWord = words[0];
 
         }
-
-        // Close the Scanner
-        scanner.close();
-
-        System.out.println(solidLn +
-                "    Bye. Rate 5 stars.\n" +
-                solidLn);
 
     }
 }
