@@ -16,19 +16,37 @@ public class Reboot {
         String input = scanner.nextLine();
 
         // Initialise tasklist and numTasks
-        String[] tasklist = new String[100];
+        Task[] tasklist = new Task[100];
         int numTasks = 0;
 
         // Loop when input is not bye
         while (!input.equals("bye")) {
             if (input.equals(("list"))) {
-                System.out.print(solidLn);
+                System.out.print(solidLn +
+                        "\n    Here are the tasks in your list:\n");
                 for (int i = 1; i < numTasks + 1; i++) {
-                    System.out.println("    " + i + ". " + tasklist[i - 1]);
+                    System.out.println("    " + i + ". [" + tasklist[i - 1].getStatusIcon() + "] " +
+                            tasklist[i - 1].getDescription());
                 }
                 System.out.println(solidLn);
+            } else if (input.startsWith("mark")) {
+                int num = Integer.parseInt(input.replaceAll("[^0-9]", ""));
+                Task t = tasklist[num - 1];
+                t.mark();
+                System.out.println(solidLn +
+                        "    Marked\n" +
+                        "      [" + t.getStatusIcon() + "] " + t.getDescription() + "\n" +
+                        solidLn);
+            } else if (input.startsWith("unmark")) {
+                int num = Integer.parseInt(input.replaceAll("[^0-9]", ""));
+                Task t = tasklist[num - 1];
+                t.unmark();
+                System.out.println(solidLn +
+                        "    Unmarked\n" +
+                        "      [" + t.getStatusIcon() + "] " + t.getDescription() + "\n" +
+                        solidLn);
             } else {
-                tasklist[numTasks] = input;
+                tasklist[numTasks] = new Task(input);
                 numTasks++;
                 System.out.println(solidLn +
                         "    added: " + input + "\n" +
