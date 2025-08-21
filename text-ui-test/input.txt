@@ -5,10 +5,12 @@ deadline
 event
 mark
 unmark
+delete
 todo borrow book
 todo read book
 mark 3
 unmark 4
+delete 5
 deadline return book /by June 6th
 event project meeting /from Aug 6th /to 4pm
 list
@@ -18,5 +20,7 @@ mark 1
 mark 2
 list
 unmark 2
+list
+delete 1
 list
 bye

@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Reboot {
     public static void main(String[] args) {
@@ -20,7 +21,7 @@ public class Reboot {
         String firstWord = words[0];
 
         // Initialise tasklist and numTasks
-        Task[] tasklist = new Task[100];
+        ArrayList<Task> tasklist = new ArrayList<>();
         int numTasks = 0;
 
         // Loop when input is not bye
@@ -38,7 +39,7 @@ public class Reboot {
 
                         // Output list
                         for (int i = 1; i < numTasks + 1; i++) {
-                            Task t = tasklist[i - 1];
+                            Task t = tasklist.get(i - 1);
                             System.out.println("    " + i + ". " + t);
                         }
                         System.out.println(solidLn);
@@ -59,7 +60,7 @@ public class Reboot {
                         }
 
                         // Mark and output task marked
-                        Task t = tasklist[num - 1];
+                        Task t = tasklist.get(num - 1);
                         t.mark();
                         System.out.println(solidLn +
                                 "    Marked\n" +
@@ -83,7 +84,7 @@ public class Reboot {
                         }
 
                         // Unmark and output task unmarked
-                        Task t = tasklist[num - 1];
+                        Task t = tasklist.get(num - 1);
                         t.unmark();
                         System.out.println(solidLn +
                                 "    Unmarked\n" +
@@ -99,7 +100,7 @@ public class Reboot {
 
                         // Create new task and add it to list
                         Task t = new Todo(words[1]);
-                        tasklist[numTasks] = t;
+                        tasklist.add(t);
                         numTasks++;
                         System.out.println(solidLn +
                                 "    Updated\n      " + t +
@@ -123,7 +124,7 @@ public class Reboot {
 
                         // Create new task and add it to list
                         Task t = new Deadline(words[0], words[1]);
-                        tasklist[numTasks] = t;
+                        tasklist.add(t);
                         numTasks++;
                         System.out.println(solidLn +
                                 "    Updated\n      " + t +
@@ -160,7 +161,7 @@ public class Reboot {
 
                         // Create new task and add it to list
                         Task t = new Event(tmp, words[0], words[1]);
-                        tasklist[numTasks] = t;
+                        tasklist.add(t);
                         numTasks++;
                         System.out.println(solidLn +
                                 "    Updated\n      " + t +
@@ -168,6 +169,32 @@ public class Reboot {
                                 solidLn);
                     }
                     break;
+                    case "delete": {
+                        // Throw exception if there is no index given
+                        if (words.length == 1) {
+                            throw new RebootException("Proper usage: delete {task index}");
+                        }
+
+                        // Get the index for the task to be deleted
+                        int num = Integer.parseInt(words[1]);
+
+                        // Throw exception when number provided is not within index
+                        if (num > numTasks) {
+                            throw new RebootException(
+                                    "Only numbers from 1 to " + numTasks + " are allowed");
+                        }
+
+                        // Delete and output task deleted
+                        Task t = tasklist.get(num - 1);
+                        tasklist.remove(t);
+                        numTasks--;
+                        System.out.println(solidLn +
+                                "\n    Deleting task\n      " + t +
+                                "\n    " + numTasks + " tasks in the list\n" +
+                                solidLn);
+                    }
+                        break;
+
                     default:
                         throw new RebootException("I don't quite understand your language");
                 }
