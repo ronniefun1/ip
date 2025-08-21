@@ -5,8 +5,8 @@ public class Reboot {
         String solidLn = "    ____________________________________________________________\n";
 
         System.out.println(solidLn +
-                "    Hello! I'm Reboot\n" +
-                "    What can I do for you?\n" +
+                "    Hello! I'm Reboot the best chatbot\n" +
+                "    What can the best chatbot do for you?\n" +
                 solidLn);
 
         // Create a Scanner
@@ -25,77 +25,155 @@ public class Reboot {
 
         // Loop when input is not bye
         while (!input.equals("bye")) {
-            switch (firstWord) {
-                case "list": {
-                    System.out.print(solidLn +
-                            "\n    Here are the tasks in your list:\n");
-                    for (int i = 1; i < numTasks + 1; i++) {
-                        Task t = tasklist[i - 1];
-                        System.out.println("    " + i + ". " + t);
+            try {
+                switch (firstWord) {
+                    case "list": {
+                        // If no tasks have been added, throw exception
+                        if (numTasks == 0) {
+                            throw new RebootException("list function is useless without any tasks");
+                        }
+
+                        System.out.print(solidLn +
+                                "\n    Here are the tasks in your list:\n");
+
+                        // Output list
+                        for (int i = 1; i < numTasks + 1; i++) {
+                            Task t = tasklist[i - 1];
+                            System.out.println("    " + i + ". " + t);
+                        }
+                        System.out.println(solidLn);
                     }
-                    System.out.println(solidLn);
-                }
+                        break;
+                    case "mark": {
+                        // Throw exception if there is no index given
+                        if (words.length == 1) {
+                            throw new RebootException("Proper usage: mark {task index}");
+                        }
+
+                        // Get the index for the task to be marked
+                        int num = Integer.parseInt(words[1]);
+
+                        // Throw exception when number provided is not within index
+                        if (num > numTasks) {
+                            throw new RebootException("Only numbers from 1 to " + numTasks + " are allowed");
+                        }
+
+                        // Mark and output task marked
+                        Task t = tasklist[num - 1];
+                        t.mark();
+                        System.out.println(solidLn +
+                                "    Marked\n" +
+                                "      " + t + "\n" +
+                                solidLn);
+                    }
+                        break;
+                    case "unmark": {
+                        // Throw exception if there is no index given
+                        if (words.length == 1) {
+                            throw new RebootException("Proper usage: unmark {task index}");
+                        }
+
+                        // Get the index for the task to be marked
+                        int num = Integer.parseInt(words[1]);
+
+                        // Throw exception when number provided is not within index
+                        if (num > numTasks) {
+                            throw new RebootException(
+                                    "Only numbers from 1 to " + numTasks + " are allowed");
+                        }
+
+                        // Unmark and output task unmarked
+                        Task t = tasklist[num - 1];
+                        t.unmark();
+                        System.out.println(solidLn +
+                                "    Unmarked\n" +
+                                "      " + t + "\n" +
+                                solidLn);
+                    }
                     break;
-                case "mark": {
-                    int num = Integer.parseInt(words[1]);
-                    Task t = tasklist[num - 1];
-                    t.mark();
-                    System.out.println(solidLn +
-                            "    Marked\n" +
-                            "      " + t + "\n" +
-                            solidLn);
-                }
+                    case "todo": {
+                        // Throw exception when description of task not provided
+                        if (words.length == 1) {
+                            throw new RebootException("Proper usage: todo {description}");
+                        }
+
+                        // Create new task and add it to list
+                        Task t = new Todo(words[1]);
+                        tasklist[numTasks] = t;
+                        numTasks++;
+                        System.out.println(solidLn +
+                                "    Updated\n      " + t +
+                                "\n    " + numTasks + " tasks in the list\n" +
+                                solidLn);
+                    }
                     break;
-                case "unmark": {
-                    int num = Integer.parseInt(words[1]);
-                    Task t = tasklist[num - 1];
-                    t.unmark();
-                    System.out.println(solidLn +
-                            "    Unmarked\n" +
-                            "      " + t + "\n" +
-                            solidLn);
-                }
+                    case "deadline": {
+                        // Throw exception when description of task not provided
+                        if (words.length == 1) {
+                            throw new RebootException("Proper usage: deadline {description} /by {due date}");
+                        }
+
+                        // Get the description and due date of task
+                        words = words[1].split(" /by ");
+
+                        // Throw exception if either fields are empty
+                        if (words.length == 1) {
+                            throw new RebootException("Proper usage: deadline {description} /by {due date}");
+                        }
+
+                        // Create new task and add it to list
+                        Task t = new Deadline(words[0], words[1]);
+                        tasklist[numTasks] = t;
+                        numTasks++;
+                        System.out.println(solidLn +
+                                "    Updated\n      " + t +
+                                "\n    " + numTasks + " tasks in the list\n" +
+                                solidLn);
+                    }
                     break;
-                case "todo": {
-                    Task t = new Todo(words[1]);
-                    tasklist[numTasks] = t;
-                    numTasks++;
-                    System.out.println(solidLn +
-                            "    Updated\n      " + t +
-                            "\n    " + numTasks + " tasks in the list\n" +
-                            solidLn);
-                }
+                    case "event": {
+                        // Throw exception when description of task not provided
+                        if (words.length == 1) {
+                            throw new RebootException(
+                                    "Proper usage: event {description} /from {start date} /to {end date}");
+                        }
+
+                        // Separate the description and the start/end dates
+                        words = words[1].split(" /from ");
+
+                        //Throw exception if description or dates are missing
+                        if (words.length == 1) {
+                            throw new RebootException(
+                                    "Proper usage: event {description} /from {start date} /to {end date}");
+                        }
+
+                        String tmp = words[0]; // Description
+
+                        // Separate the start and end dates
+                        words = words[1].split(" /to ");
+
+                        //Throw exception if either date is missing
+                        if (words.length == 1) {
+                            throw new RebootException(
+                                    "Proper usage: event {description} /from {start date} /to {end date}");
+                        }
+
+                        // Create new task and add it to list
+                        Task t = new Event(tmp, words[0], words[1]);
+                        tasklist[numTasks] = t;
+                        numTasks++;
+                        System.out.println(solidLn +
+                                "    Updated\n      " + t +
+                                "\n    " + numTasks + " tasks in the list\n" +
+                                solidLn);
+                    }
                     break;
-                case "deadline": {
-                    words = words[1].split(" /by ");
-                    Task t = new Deadline(words[0], words[1]);
-                    tasklist[numTasks] = t;
-                    numTasks++;
-                    System.out.println(solidLn +
-                            "    Updated\n      " + t +
-                            "\n    " + numTasks + " tasks in the list\n" +
-                            solidLn);
+                    default:
+                        throw new RebootException("I don't quite understand your language");
                 }
-                    break;
-                case "event": {
-                    words = words[1].split(" /from ");
-                    String tmp = words[0];
-                    words = words[1].split(" /to ");
-                    Task t = new Event(tmp, words[0], words[1]);
-                    tasklist[numTasks] = t;
-                    numTasks++;
-                    System.out.println(solidLn +
-                            "    Updated\n      " + t +
-                            "\n    " + numTasks + " tasks in the list\n" +
-                            solidLn);
-                }
-                break;
-                default:
-                    tasklist[numTasks] = new Task(input);
-                    numTasks++;
-                    System.out.println(solidLn +
-                            "    added: " + input + "\n" +
-                            solidLn);
+            }
+            catch (RebootException e) {
+                System.out.println(solidLn + "    " + e.getMessage() + "\n" + solidLn);
             }
 
             // Get next input
@@ -111,7 +189,7 @@ public class Reboot {
         scanner.close();
 
         System.out.println(solidLn +
-                "    Bye. Hope to see you again soon!\n" +
+                "    Bye. Rate 5 stars.\n" +
                 solidLn);
 
     }
