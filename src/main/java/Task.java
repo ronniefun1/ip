@@ -1,10 +1,10 @@
 public class Task {
-    private String description;
-    private boolean isDone;
+    protected String description;
+    protected boolean isDone;
 
-    public Task(String description) {
+    public Task(String description, boolean isDone) {
         this.description = description;
-        this.isDone = false;
+        this.isDone = isDone;
     }
 
     public String getStatusIcon() {
@@ -20,6 +20,11 @@ public class Task {
     public void unmark() {
         this.isDone = false;
     }
+
+    public String toFileString() {
+        return null;
+    }
+
 
     @Override
     public String toString() {
