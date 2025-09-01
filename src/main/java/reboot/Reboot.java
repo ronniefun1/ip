@@ -1,5 +1,6 @@
-import java.util.Scanner;
-import java.util.ArrayList;
+package reboot;
+
+import reboot.command.Command;
 
 public class Reboot {
 
@@ -14,7 +15,7 @@ public class Reboot {
         try {
             tasks = new TaskList(storage.load());
         } catch (Exception e) {
-            ui.showLoadingError(e.getMessage());
+            ui.showError(e.getMessage());
             tasks = new TaskList();
         }
     }
@@ -29,7 +30,7 @@ public class Reboot {
                 c.execute(tasks, ui, storage);
                 isExit = c.isExit();
             } catch (RebootException e) {
-                ui.showError("Reboot critical error: " + e.getMessage());
+                ui.showError(e.getMessage());
             } catch (IllegalArgumentException e) {
                 ui.showError("I do not understand your language");
             }

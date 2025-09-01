@@ -1,23 +1,26 @@
-public class DeleteCommand extends Command{
+package reboot.command;
+
+import reboot.*;
+import reboot.task.Task;
+
+public class MarkCommand extends Command {
 
     private final int index;
 
-    public DeleteCommand(int index) {
+    public MarkCommand(int index) {
         this.index = index;
     }
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws RebootException {
 
-        // Throw exception when number provided is not within index
         if (tasks.isOutOfRange(index)) {
             throw new RebootException("Only numbers from 1 to " + tasks.size() + " are allowed");
         }
 
         Task t = tasks.get(index - 1);
-        tasks.remove(t);
+        t.mark();
         storage.writeFile(tasks.getAll());
-        ui.showMessage("    Deleting task\n      " + t +
-                "\n    " + tasks.size() + " tasks in the list\n");
+        ui.showMessage("    Marked\n" + "      " + t);
     }
 }

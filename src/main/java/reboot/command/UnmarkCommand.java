@@ -1,8 +1,14 @@
-public class MarkCommand extends Command{
+package reboot.command;
 
+import reboot.RebootException;
+
+import reboot.*;
+import reboot.task.Task;
+
+public class UnmarkCommand extends Command {
     private final int index;
 
-    public MarkCommand(int index) {
+    public UnmarkCommand(int index) {
         this.index = index;
     }
 
@@ -14,8 +20,8 @@ public class MarkCommand extends Command{
         }
 
         Task t = tasks.get(index - 1);
-        t.mark();
+        t.unmark();
         storage.writeFile(tasks.getAll());
-        ui.showMessage("    Marked\n" + "      " + t);
+        ui.showMessage("    Unmarked\n" + "      " + t);
     }
 }

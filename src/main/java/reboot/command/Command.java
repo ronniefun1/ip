@@ -1,3 +1,10 @@
+package reboot.command;
+
+import reboot.RebootException;
+import reboot.Storage;
+import reboot.TaskList;
+import reboot.Ui;
+
 public abstract class Command {
 
     public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws RebootException;
