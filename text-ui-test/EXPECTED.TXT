@@ -4,7 +4,18 @@
     ____________________________________________________________
 
     ____________________________________________________________
-    list function is useless without any tasks
+    Here are the tasks in your list:
+    1. [T][ ] read book
+    2. [D][ ] return book (by: 10 10 2025)
+    3. [D][ ] assignment (by: 09 11 2025 1000)
+    4. [D][ ] project meeting (by: 09 11 2025)
+    5. [D][ ] project meeting (by: 09 11 2025 1700)
+    6. [T][ ] join sports club
+    7. [T][ ] borrow book
+    ____________________________________________________________
+
+    ____________________________________________________________
+    Cleared tasklist
     ____________________________________________________________
 
     ____________________________________________________________
@@ -12,27 +23,27 @@
     ____________________________________________________________
 
     ____________________________________________________________
-    Proper usage: todo {description}
+    Reboot error: Proper usage: todo {description}
     ____________________________________________________________
 
     ____________________________________________________________
-    Proper usage: deadline {description} /by {due date}
+    Reboot error: Proper usage: deadline {description} /by {due date}
     ____________________________________________________________
 
     ____________________________________________________________
-    Proper usage: event {description} /from {start date} /to {end date}
+    Reboot error: Proper usage: event {description} /from {start date} /to {end date}
     ____________________________________________________________
 
     ____________________________________________________________
-    Proper usage: mark {task index}
+    Reboot error: Proper usage: mark {task index}
     ____________________________________________________________
 
     ____________________________________________________________
-    Proper usage: unmark {task index}
+    Reboot error: Proper usage: unmark {task index}
     ____________________________________________________________
 
     ____________________________________________________________
-    Proper usage: delete {task index}
+    Reboot error: Proper usage: delete {task index}
     ____________________________________________________________
 
     ____________________________________________________________
@@ -48,48 +59,61 @@
     ____________________________________________________________
 
     ____________________________________________________________
-    Only numbers from 1 to 2 are allowed
+    Reboot error: Only numbers from 1 to 2 are allowed
     ____________________________________________________________
 
     ____________________________________________________________
-    Only numbers from 1 to 2 are allowed
+    Reboot error: Only numbers from 1 to 2 are allowed
     ____________________________________________________________
 
     ____________________________________________________________
-    Only numbers from 1 to 2 are allowed
+    Reboot error: Only numbers from 1 to 2 are allowed
     ____________________________________________________________
 
     ____________________________________________________________
     Updated
-      [D][ ] return book (by: June 6th)
+      [D][ ] return book (by: 10 10 2025)
     3 tasks in the list
     ____________________________________________________________
 
     ____________________________________________________________
     Updated
-      [E][ ] project meeting (from: Aug 6th to: 4pm)
+      [D][ ] assignment (by: 09 11 2025 1000)
     4 tasks in the list
     ____________________________________________________________
 
     ____________________________________________________________
-
-    Here are the tasks in your list:
-    1. [T][ ] borrow book
-    2. [T][ ] read book
-    3. [D][ ] return book (by: June 6th)
-    4. [E][ ] project meeting (from: Aug 6th to: 4pm)
-    ____________________________________________________________
-
-    ____________________________________________________________
     Updated
-      [T][ ] join sports club
+      [E][ ] project meeting (from: 09 11 2025 to: 09 11 2025)
     5 tasks in the list
     ____________________________________________________________
 
     ____________________________________________________________
     Updated
-      [T][ ] borrow book
+      [E][ ] project meeting (from: 09 11 2025 1700 to: 09 11 2025 1900)
     6 tasks in the list
+    ____________________________________________________________
+
+    ____________________________________________________________
+    Here are the tasks in your list:
+    1. [T][ ] borrow book
+    2. [T][ ] read book
+    3. [D][ ] return book (by: 10 10 2025)
+    4. [D][ ] assignment (by: 09 11 2025 1000)
+    5. [E][ ] project meeting (from: 09 11 2025 to: 09 11 2025)
+    6. [E][ ] project meeting (from: 09 11 2025 1700 to: 09 11 2025 1900)
+    ____________________________________________________________
+
+    ____________________________________________________________
+    Updated
+      [T][ ] join sports club
+    7 tasks in the list
+    ____________________________________________________________
+
+    ____________________________________________________________
+    Updated
+      [T][ ] borrow book
+    8 tasks in the list
     ____________________________________________________________
 
     ____________________________________________________________
@@ -103,14 +127,15 @@
     ____________________________________________________________
 
     ____________________________________________________________
-
     Here are the tasks in your list:
     1. [T][X] borrow book
     2. [T][X] read book
-    3. [D][ ] return book (by: June 6th)
-    4. [E][ ] project meeting (from: Aug 6th to: 4pm)
-    5. [T][ ] join sports club
-    6. [T][ ] borrow book
+    3. [D][ ] return book (by: 10 10 2025)
+    4. [D][ ] assignment (by: 09 11 2025 1000)
+    5. [E][ ] project meeting (from: 09 11 2025 to: 09 11 2025)
+    6. [E][ ] project meeting (from: 09 11 2025 1700 to: 09 11 2025 1900)
+    7. [T][ ] join sports club
+    8. [T][ ] borrow book
     ____________________________________________________________
 
     ____________________________________________________________
@@ -119,31 +144,32 @@
     ____________________________________________________________
 
     ____________________________________________________________
-
     Here are the tasks in your list:
     1. [T][X] borrow book
     2. [T][ ] read book
-    3. [D][ ] return book (by: June 6th)
-    4. [E][ ] project meeting (from: Aug 6th to: 4pm)
-    5. [T][ ] join sports club
-    6. [T][ ] borrow book
+    3. [D][ ] return book (by: 10 10 2025)
+    4. [D][ ] assignment (by: 09 11 2025 1000)
+    5. [E][ ] project meeting (from: 09 11 2025 to: 09 11 2025)
+    6. [E][ ] project meeting (from: 09 11 2025 1700 to: 09 11 2025 1900)
+    7. [T][ ] join sports club
+    8. [T][ ] borrow book
     ____________________________________________________________
 
     ____________________________________________________________
-
     Deleting task
       [T][X] borrow book
-    5 tasks in the list
+    7 tasks in the list
     ____________________________________________________________
 
     ____________________________________________________________
-
     Here are the tasks in your list:
     1. [T][ ] read book
-    2. [D][ ] return book (by: June 6th)
-    3. [E][ ] project meeting (from: Aug 6th to: 4pm)
-    4. [T][ ] join sports club
-    5. [T][ ] borrow book
+    2. [D][ ] return book (by: 10 10 2025)
+    3. [D][ ] assignment (by: 09 11 2025 1000)
+    4. [E][ ] project meeting (from: 09 11 2025 to: 09 11 2025)
+    5. [E][ ] project meeting (from: 09 11 2025 1700 to: 09 11 2025 1900)
+    6. [T][ ] join sports club
+    7. [T][ ] borrow book
     ____________________________________________________________
 
     ____________________________________________________________
