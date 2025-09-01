@@ -1,3 +1,7 @@
+package reboot;
+
+import reboot.task.Task;
+
 import java.util.Scanner;
 
 public class Ui {
@@ -10,7 +14,7 @@ public class Ui {
 
     public void showWelcome() {
         showLine();
-        System.out.println("    Hello! I'm Reboot the best chatbot\n" +
+        System.out.println("    Hello! I'm reboot.Reboot the best chatbot\n" +
                 "    What can the best chatbot do for you?\n");
         showLine();
     }
@@ -32,12 +36,6 @@ public class Ui {
             Task t = tasks.get(i - 1);
             System.out.println("    " + i + ". " + t);
         }
-        showLine();
-    }
-
-    public void showLoadingError(String message) {
-        showLine();
-        System.out.println("    Reboot loading error: " + message);
         showLine();
     }
 

@@ -1,61 +1,50 @@
+package reboot.task;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 
-public class Event extends Task {
+public class Deadline extends Task {
 
-    // If date is the only thing provided
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDate dueDate; // If date is the only thing provided
+    private LocalDateTime dueDateTime; // If time is provided
 
-    // If time is provided
-    private LocalDateTime startDateTime;
-    private LocalDateTime endDateTime;
-
-    public Event(String description, boolean isDone, String start, String end) {
+    public Deadline(String description, boolean isDone, String dueDate) {
         super(description, isDone);
-        parseInput(start, end);
+        parseInput(dueDate);
     }
 
     @Override
     public String toFileString() {
-        if (startDate != null) {
-            DateTimeFormatter start = DateTimeFormatter.ofPattern("dd MM yyyy");
-            DateTimeFormatter end = DateTimeFormatter.ofPattern("dd MM yyyy");
-            return "D | " + (isDone ? "1" : "0") + " | " + description
-                    + " | " + startDate.format(start) + " | " + endDate.format(end);
+        if (dueDate != null) {
+            DateTimeFormatter output = DateTimeFormatter.ofPattern("dd MM yyyy");
+            return "D | " + (isDone ? "1" : "0") + " | "
+                    + description + " | " + dueDate.format(output);
         } else {
-            DateTimeFormatter start = DateTimeFormatter.ofPattern("dd MM yyyy HHmm");
-            DateTimeFormatter end = DateTimeFormatter.ofPattern("dd MM yyyy HHmm");
-            return "D | " + (isDone ? "1" : "0") + " | " + description
-                    + " | " + startDateTime.format(start) + " | " + endDateTime.format(end);
+            DateTimeFormatter output = DateTimeFormatter.ofPattern("dd MM yyyy HHmm");
+            return "D | " + (isDone ? "1" : "0") + " | "
+                    + description + " | " + dueDateTime.format(output);
         }
     }
 
     @Override
     public String toString() {
-        if (startDate != null) {
-            DateTimeFormatter start = DateTimeFormatter.ofPattern("dd MM yyyy");
-            DateTimeFormatter end = DateTimeFormatter.ofPattern("dd MM yyyy");
-            return "[E]" + super.toString() + " (from: "
-                    + startDate.format(start) + " to: " + endDate.format(end) + ")";
+        if (dueDate != null) {
+            DateTimeFormatter output = DateTimeFormatter.ofPattern("dd MM yyyy");
+            return "[D]" + super.toString() + " (by: " + dueDate.format(output) + ")";
         } else {
-            DateTimeFormatter start = DateTimeFormatter.ofPattern("dd MM yyyy HHmm");
-            DateTimeFormatter end = DateTimeFormatter.ofPattern("dd MM yyyy HHmm");
-            return "[E]" + super.toString() + " (from: "
-                    + startDateTime.format(start) + " to: " + endDateTime.format(end) + ")";
+            DateTimeFormatter output = DateTimeFormatter.ofPattern("dd MM yyyy HHmm");
+            return "[D]" + super.toString() + " (by: " + dueDateTime.format(output) + ")";
         }
     }
 
-    private void parseInput(String start, String end) {
+    private void parseInput(String input) {
         try {
             // Try to parse with datetime
-            this.startDateTime = parseDateTime(start);
-            this.endDateTime = parseDateTime(end);
+            this.dueDateTime = parseDateTime(input);
         } catch (Exception e) {
             // Otherwise parse as date only
-            this.startDate = parseDate(start);
-            this.endDate = parseDate(end);
+            this.dueDate = parseDate(input);
         }
     }
 

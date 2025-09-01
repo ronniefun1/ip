@@ -1,5 +1,5 @@
     ____________________________________________________________
-    Hello! I'm Reboot the best chatbot
+    Hello! I'm reboot.Reboot the best chatbot
     What can the best chatbot do for you?
 
     ____________________________________________________________
@@ -20,22 +20,22 @@
     I do not understand your language
     ____________________________________________________________
     ____________________________________________________________
-    Reboot critical error: Reboot error: Proper usage: todo {description}
+    Reboot error: Proper usage: todo {description}
     ____________________________________________________________
     ____________________________________________________________
-    Reboot critical error: Reboot error: Proper usage: deadline {description} /by {due date}
+    Reboot error: Proper usage: deadline {description} /by {due date}
     ____________________________________________________________
     ____________________________________________________________
-    Reboot critical error: Reboot error: Proper usage: event {description} /from {start date} /to {end date}
+    Reboot error: Proper usage: event {description} /from {start date} /to {end date}
     ____________________________________________________________
     ____________________________________________________________
-    Reboot critical error: Reboot error: Proper usage: mark {task index}
+    Reboot error: Proper usage: mark {task index}
     ____________________________________________________________
     ____________________________________________________________
-    Reboot critical error: Reboot error: Proper usage: unmmark {task index}
+    Reboot error: Proper usage: unmmark {task index}
     ____________________________________________________________
     ____________________________________________________________
-    Reboot critical error: Reboot error: Proper usage: delete {task index}
+    Reboot error: Proper usage: delete {task index}
     ____________________________________________________________
     ____________________________________________________________
     Updated
@@ -48,13 +48,13 @@
     2 tasks in the list
     ____________________________________________________________
     ____________________________________________________________
-    Reboot critical error: Reboot error: Only numbers from 1 to 2 are allowed
+    Reboot error: Only numbers from 1 to 2 are allowed
     ____________________________________________________________
     ____________________________________________________________
-    Reboot critical error: Reboot error: Only numbers from 1 to 2 are allowed
+    Reboot error: Only numbers from 1 to 2 are allowed
     ____________________________________________________________
     ____________________________________________________________
-    Reboot critical error: Reboot error: Only numbers from 1 to 2 are allowed
+    Reboot error: Only numbers from 1 to 2 are allowed
     ____________________________________________________________
     ____________________________________________________________
     Updated
