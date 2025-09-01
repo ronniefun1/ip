@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Reboot {
+
     public static void main(String[] args) {
         String solidLn = "    ____________________________________________________________\n";
 
@@ -12,6 +13,7 @@ public class Reboot {
 
         // Create a Scanner
         Scanner scanner = new Scanner(System.in);
+        Storage storage = new Storage();
 
         // Get String input
         String input = scanner.nextLine();
@@ -21,8 +23,8 @@ public class Reboot {
         String firstWord = words[0];
 
         // Initialise tasklist and numTasks
-        ArrayList<Task> tasklist = new ArrayList<>();
-        int numTasks = 0;
+        ArrayList<Task> tasklist = storage.getTaskList();
+        int numTasks = tasklist.size();
 
         // Loop when input is not bye
         while (true) {
@@ -36,8 +38,9 @@ public class Reboot {
                         System.out.println(solidLn +
                                 "    Bye. Rate 5 stars.\n" +
                                 solidLn);
+                        return;
                     }
-                    return;
+
                     case LIST: {
                         // If no tasks have been added, throw exception
                         if (numTasks == 0) {
@@ -53,8 +56,8 @@ public class Reboot {
                             System.out.println("    " + i + ". " + t);
                         }
                         System.out.println(solidLn);
+                        break;
                     }
-                    break;
                     case MARK: {
                         // Throw exception if there is no index given
                         if (words.length == 1) {
@@ -76,8 +79,9 @@ public class Reboot {
                                 "    Marked\n" +
                                 "      " + t + "\n" +
                                 solidLn);
+                        storage.writeFile(tasklist);
+                        break;
                     }
-                    break;
                     case UNMARK: {
                         // Throw exception if there is no index given
                         if (words.length == 1) {
@@ -100,8 +104,9 @@ public class Reboot {
                                 "    Unmarked\n" +
                                 "      " + t + "\n" +
                                 solidLn);
+                        storage.writeFile(tasklist);
+                        break;
                     }
-                    break;
                     case TODO: {
                         // Throw exception when description of task not provided
                         if (words.length == 1) {
@@ -109,15 +114,16 @@ public class Reboot {
                         }
 
                         // Create new task and add it to list
-                        Task t = new Todo(words[1]);
+                        Task t = new Todo(words[1], false);
                         tasklist.add(t);
                         numTasks++;
                         System.out.println(solidLn +
                                 "    Updated\n      " + t +
                                 "\n    " + numTasks + " tasks in the list\n" +
                                 solidLn);
+                        storage.appendLine(t.toFileString());
+                        break;
                     }
-                    break;
                     case DEADLINE: {
                         // Throw exception when description of task not provided
                         if (words.length == 1) {
@@ -133,15 +139,16 @@ public class Reboot {
                         }
 
                         // Create new task and add it to list
-                        Task t = new Deadline(words[0], words[1]);
+                        Task t = new Deadline(words[0], false, words[1]);
                         tasklist.add(t);
                         numTasks++;
                         System.out.println(solidLn +
                                 "    Updated\n      " + t +
                                 "\n    " + numTasks + " tasks in the list\n" +
                                 solidLn);
+                        storage.appendLine(t.toFileString());
+                        break;
                     }
-                    break;
                     case EVENT: {
                         // Throw exception when description of task not provided
                         if (words.length == 1) {
@@ -170,15 +177,16 @@ public class Reboot {
                         }
 
                         // Create new task and add it to list
-                        Task t = new Event(tmp, words[0], words[1]);
+                        Task t = new Event(tmp, false, words[0], words[1]);
                         tasklist.add(t);
                         numTasks++;
                         System.out.println(solidLn +
                                 "    Updated\n      " + t +
                                 "\n    " + numTasks + " tasks in the list\n" +
                                 solidLn);
+                        storage.appendLine(t.toFileString());
+                        break;
                     }
-                    break;
                     case DELETE: {
                         // Throw exception if there is no index given
                         if (words.length == 1) {
@@ -202,8 +210,11 @@ public class Reboot {
                                 "\n    Deleting task\n      " + t +
                                 "\n    " + numTasks + " tasks in the list\n" +
                                 solidLn);
-                    }
+                        storage.writeFile(tasklist);
                         break;
+                    }
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + action);
                 }
             }
             catch (IllegalArgumentException e) {

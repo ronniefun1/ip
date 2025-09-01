@@ -1,15 +1,22 @@
 public class Event extends Task {
-    private String start;
-    private String end;
+    private String startTime;
+    private String endTime;
 
-    public Event(String description, String start, String end) {
-        super(description);
-        this.start = start;
-        this.end = end;
+    public Event(String description, boolean isDone, String start, String end) {
+        super(description, isDone);
+        this.startTime = start;
+        this.endTime = end;
+    }
+
+    @Override
+    public String toFileString() {
+        return "E | " + (isDone ? "1" : "0") + " | " + description
+                + " | " + startTime + " | " + endTime ;
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + start + " to: " + end + ")";
+        return "[E]" + super.toString()
+                + " (from: " + startTime + " to: " + endTime + ")";
     }
 }
