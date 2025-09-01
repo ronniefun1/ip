@@ -10,8 +10,9 @@ import java.util.Optional;
 public class Storage {
     private final Path file;
 
-    public Storage() {
-        this.file = Paths.get("output", "Reboot.txt");
+    public Storage(String filePath) {
+
+        this.file = Paths.get("output", filePath);
     }
 
     public void checkFile() {
@@ -31,7 +32,7 @@ public class Storage {
         }
     }
 
-    public ArrayList<Task> getTaskList() {
+    public ArrayList<Task> load() {
         checkFile();
         ArrayList<Task> taskList = new ArrayList<>();
         try {
