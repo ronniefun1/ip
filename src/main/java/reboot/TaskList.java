@@ -47,4 +47,20 @@ public class TaskList {
     public boolean isOutOfRange(int n) {
         return n > tasks.size();
     }
+
+    /**
+     * Finds tasks in tasklist which contains the specified keyword.
+     * @param keyword Keyword to search for in the tasklist.
+     */
+    public TaskList findTasks(String keyword) {
+        TaskList results = new TaskList();
+
+        for (Task t : tasks) {
+            if (t.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
+                results.add(t);
+            }
+        }
+
+        return results;
+    }
 }

@@ -29,7 +29,7 @@ public class Ui {
         showLine();
     }
 
-    public void showTaskList (TaskList tasks) {
+    public void showTaskList(TaskList tasks) {
         showLine();
         System.out.print("    Here are the tasks in your list:\n");
         for (int i = 1; i < tasks.size() + 1; i++) {
@@ -48,6 +48,20 @@ public class Ui {
     public void showError(String message) {
         showLine();
         System.out.println("    " + message);
+        showLine();
+    }
+
+    /**
+     * Displays the results of search in ui.
+     * @param tasks Tasklist which contains the results of the search.
+     */
+    public void showSearchResult(TaskList tasks) {
+        showLine();
+        System.out.println("    Here are the results of searching:");
+        for (int i = 1; i < tasks.size() + 1; i++) {
+            Task t = tasks.get(i - 1);
+            System.out.println("    " + i + ". " + t);
+        }
         showLine();
     }
 }
