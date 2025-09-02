@@ -63,7 +63,7 @@ public class Parser {
                         "Proper usage: event {description} /from {start date} /to {end date}");
             }
 
-            String description = words[0]; // Description
+            String description = words[0];
 
             // Separate the start and end dates
             words = words[1].split(" /to ");

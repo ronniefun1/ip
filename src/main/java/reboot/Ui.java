@@ -15,7 +15,7 @@ public class Ui {
     public void showWelcome() {
         showLine();
         System.out.println("    Hello! I'm reboot.Reboot the best chatbot\n" +
-                "    What can the best chatbot do for you?\n");
+                "    What can the best chatbot do for you?");
         showLine();
     }
 

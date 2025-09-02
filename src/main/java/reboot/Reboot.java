@@ -2,7 +2,11 @@ package reboot;
 
 import reboot.command.Command;
 
+import java.io.IOException;
+
 public class Reboot {
+
+    private static final String DEFAULT_FILE_PATH = "output/reboot.txt";
 
     private Ui ui;
     private TaskList tasks;
@@ -14,7 +18,7 @@ public class Reboot {
 
         try {
             tasks = new TaskList(storage.load());
-        } catch (Exception e) {
+        } catch (IOException e) {
             ui.showError(e.getMessage());
             tasks = new TaskList();
         }
@@ -38,6 +42,6 @@ public class Reboot {
     }
 
     public static void main(String[] args) {
-        new Reboot("output/reboot.txt").run();
+        new Reboot(DEFAULT_FILE_PATH).run();
     }
 }

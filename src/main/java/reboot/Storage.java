@@ -39,7 +39,7 @@ public class Storage {
         }
     }
 
-    public ArrayList<Task> load() {
+    public ArrayList<Task> load() throws IOException {
         checkFile();
         ArrayList<Task> taskList = new ArrayList<>();
         try {
