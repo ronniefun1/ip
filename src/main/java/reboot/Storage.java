@@ -54,7 +54,7 @@ public class Storage {
     /**
      * Returns the tasklist from previous sessions from the storage location
      */
-    public ArrayList<Task> load() {
+    public ArrayList<Task> load() throws IOException {
         checkFile();
         ArrayList<Task> taskList = new ArrayList<>();
         try {
