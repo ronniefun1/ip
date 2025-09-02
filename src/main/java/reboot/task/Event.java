@@ -24,12 +24,12 @@ public class Event extends Task {
         if (startDate != null) {
             DateTimeFormatter start = DateTimeFormatter.ofPattern("dd MM yyyy");
             DateTimeFormatter end = DateTimeFormatter.ofPattern("dd MM yyyy");
-            return "D | " + (isDone ? "1" : "0") + " | " + description
+            return "E | " + (isDone ? "1" : "0") + " | " + description
                     + " | " + startDate.format(start) + " | " + endDate.format(end);
         } else {
             DateTimeFormatter start = DateTimeFormatter.ofPattern("dd MM yyyy HHmm");
             DateTimeFormatter end = DateTimeFormatter.ofPattern("dd MM yyyy HHmm");
-            return "D | " + (isDone ? "1" : "0") + " | " + description
+            return "E | " + (isDone ? "1" : "0") + " | " + description
                     + " | " + startDateTime.format(start) + " | " + endDateTime.format(end);
         }
     }
