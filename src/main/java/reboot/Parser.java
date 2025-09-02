@@ -5,8 +5,16 @@ import reboot.task.Deadline;
 import reboot.task.Event;
 import reboot.task.Todo;
 
+/**
+ * Represents a parser that will make sense of user input.
+ */
 public class Parser {
 
+    /**
+     * Returns a command for the chatbot to complete from specified input.
+     * If unable to understand input, throw IllegalArgumentException.
+     * @param input Input of user to be converted to chatbot command.
+     */
     public static Command parse(String input) throws RebootException {
         String[] words = input.split(" ", 2);
         Commands command = Commands.valueOf(words[0].toUpperCase());

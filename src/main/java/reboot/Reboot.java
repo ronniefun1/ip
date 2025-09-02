@@ -2,12 +2,19 @@ package reboot;
 
 import reboot.command.Command;
 
+/**
+ * Represents a chatbot that will be able to track tasks.
+ */
 public class Reboot {
 
     private Ui ui;
     private TaskList tasks;
     private Storage storage;
 
+    /**
+     * Constructs a new Reboot chatbot when given a specified file path.
+     * @param filePath Location of file to store data of tasklist.
+     */
     public Reboot(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -20,6 +27,9 @@ public class Reboot {
         }
     }
 
+    /**
+     * Runs the chatbot which will constantly react to user input.
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;

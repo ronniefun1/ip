@@ -14,14 +14,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Represents a storage location that will deal with writing to
+ * and reading from file.
+ */
 public class Storage {
     private final Path file;
 
+    /**
+     * Constructs a new storage with the specified file path.
+     * @param filePath Location of file to store data of tasklist.
+     */
     public Storage(String filePath) {
 
         this.file = Paths.get("output", filePath);
     }
 
+    /**
+     * Checks if the path directory and file exists.
+     * If either does not exist, create it.
+     */
     public void checkFile() {
         try {
             // Ensure parent directories exist
@@ -39,6 +51,9 @@ public class Storage {
         }
     }
 
+    /**
+     * Returns the tasklist from previous sessions from the storage location
+     */
     public ArrayList<Task> load() {
         checkFile();
         ArrayList<Task> taskList = new ArrayList<>();
@@ -57,6 +72,10 @@ public class Storage {
         return taskList;
     }
 
+    /**
+     * Rewrites the file to include all the tasks in the tasklist
+     * @param taskList List of tasks to be written into the file
+     */
     public void writeFile(ArrayList<Task> taskList) {
         try (BufferedWriter writer = Files.newBufferedWriter(file)) {
             for (Task t : taskList) {
@@ -68,6 +87,10 @@ public class Storage {
         }
     }
 
+    /**
+     * Appends a new task to the file
+     * @param line String to be appended to the file
+     */
     public void appendLine(String line) {
         try (BufferedWriter writer = Files.newBufferedWriter(
                 file,
