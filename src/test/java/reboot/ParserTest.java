@@ -3,6 +3,7 @@ package reboot;
 import reboot.command.AddCommand;
 import reboot.command.ClearCommand;
 import reboot.command.Command;
+import reboot.command.FindCommand;
 import reboot.command.ListCommand;
 
 import org.junit.jupiter.api.Test;
@@ -83,5 +84,11 @@ public class ParserTest {
     public void parse_clearCommand_returnsClearCommand() throws Exception {
         Command c = Parser.parse("clear");
         assertTrue(c instanceof ClearCommand);
+    }
+
+    @Test
+    public void parse_findCommand_returnsFindCommand() throws Exception {
+        Command c = Parser.parse("find read");
+        assertTrue(c instanceof FindCommand);
     }
 }

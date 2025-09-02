@@ -56,5 +56,4 @@ public class AddCommand extends Command{
         ui.showMessage("    Updated\n      " + task +
                 "\n    " + tasks.size() + " tasks in the list");
     }
-
 }

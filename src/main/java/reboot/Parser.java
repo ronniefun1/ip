@@ -91,6 +91,13 @@ public class Parser {
             return new DeleteCommand(Integer.parseInt(words[1]));
         case CLEAR:
             return new ClearCommand();
+        case FIND:
+            if (words.length == 1) {
+                throw new RebootException(
+                        "Proper usage: find {keyword}");
+            }
+
+            return new FindCommand(words[1]);
         default:
             throw new IllegalStateException("Unexpected value: " + command);
         }
