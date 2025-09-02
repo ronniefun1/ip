@@ -1,17 +1,34 @@
 package reboot.command;
 
+import reboot.TaskList;
+import reboot.Ui;
+import reboot.Storage;
 import reboot.RebootException;
-
-import reboot.*;
 import reboot.task.Task;
 
+/**
+ * Represents a command that marks a task as incomplete in the tasklist.
+ */
 public class UnmarkCommand extends Command {
     private final int index;
 
+    /**
+     * Constructs a new UnmarkCommand with the specified index.
+     * @param index index of the task to be mark as incomplete.
+     */
     public UnmarkCommand(int index) {
         this.index = index;
     }
 
+    /**
+     * Unmarks the specified task as incomplete in the tasklist.
+     * Updates the tasklist file via storage.
+     * Informs the user via the ui.
+     *
+     * @param tasks Tasklist with the task to be mark as incomplete.
+     * @param ui Ui outputs message.
+     * @param storage Storage writes lines to update file.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws RebootException {
 

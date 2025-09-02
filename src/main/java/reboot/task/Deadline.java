@@ -4,16 +4,28 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 
+/**
+ * Represents a task that has a deadline.
+ */
 public class Deadline extends Task {
 
     private LocalDate dueDate; // If date is the only thing provided
     private LocalDateTime dueDateTime; // If time is provided
 
+    /**
+     * Constructs a new Deadline with the given description, isDone and dueDate.
+     * @param description Description of the deadline task.
+     * @param isDone Status of the task.
+     * @param dueDate Due date of the task.
+     */
     public Deadline(String description, boolean isDone, String dueDate) {
         super(description, isDone);
         parseInput(dueDate);
     }
 
+    /**
+     * Converts the task to a string that can be stored in a file.
+     */
     @Override
     public String toFileString() {
         if (dueDate != null) {
@@ -27,6 +39,9 @@ public class Deadline extends Task {
         }
     }
 
+    /**
+     * Converts the task to a string that can be displayed.
+     */
     @Override
     public String toString() {
         if (dueDate != null) {
@@ -48,6 +63,10 @@ public class Deadline extends Task {
         }
     }
 
+    /**
+     * Converts the given string to date time format.
+     * @param input String to be converted to date time format.
+     */
     public static LocalDateTime parseDateTime(String input) {
         DateTimeFormatter[] formats = {
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
@@ -68,6 +87,10 @@ public class Deadline extends Task {
         throw new IllegalArgumentException("Invalid date format.");
     }
 
+    /**
+     * Converts the given string to date format.
+     * @param input String to be converted to date format.
+     */
     public static LocalDate parseDate(String input) {
         DateTimeFormatter[] formats = {
                 DateTimeFormatter.ofPattern("yyyy-MM-dd"),

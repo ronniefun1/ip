@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 
+/**
+ * Represents a task that has a start time and an end time.
+ */
 public class Event extends Task {
 
     // If date is the only thing provided
@@ -14,11 +17,22 @@ public class Event extends Task {
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
 
+    /**
+     * Constructs a new Event task with the given description,
+     * isDone, start and end time.
+     * @param description Description of the event task.
+     * @param isDone Status of the task.
+     * @param start Start time of the task.
+     * @param end End time of the task.
+     */
     public Event(String description, boolean isDone, String start, String end) {
         super(description, isDone);
         parseInput(start, end);
     }
 
+    /**
+     * Converts the task to a string that can be stored in a file.
+     */
     @Override
     public String toFileString() {
         if (startDate != null) {
@@ -34,6 +48,9 @@ public class Event extends Task {
         }
     }
 
+    /**
+     * Converts the task to a string that can be displayed.
+     */
     @Override
     public String toString() {
         if (startDate != null) {
@@ -61,6 +78,10 @@ public class Event extends Task {
         }
     }
 
+    /**
+     * Converts the given string to date time format.
+     * @param input String to be converted to date time format.
+     */
     public static LocalDateTime parseDateTime(String input) {
         DateTimeFormatter[] formats = {
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
@@ -81,6 +102,10 @@ public class Event extends Task {
         throw new IllegalArgumentException("Invalid date format.");
     }
 
+    /**
+     * Converts the given string to date format.
+     * @param input String to be converted to date format.
+     */
     public static LocalDate parseDate(String input) {
         DateTimeFormatter[] formats = {
                 DateTimeFormatter.ofPattern("yyyy-MM-dd"),
