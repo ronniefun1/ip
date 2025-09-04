@@ -1,0 +1,27 @@
+package reboot.command;
+
+import reboot.RebootException;
+import reboot.Storage;
+import reboot.TaskList;
+import reboot.Ui;
+
+/**
+ * Represents a generic command that will be parsed by Parser.
+ * Provides common properties and behaviors for all commands.
+ */
+public abstract class Command {
+
+    /**
+     * Abstract method to execute the command.
+     * Subclasses must provide their own implementation for commands.
+     */
+    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws RebootException;
+
+    /**
+     * Returns true only for ExitCommand.
+     * Returns false for every other command.
+     */
+    public boolean isExit() {
+        return false; // default is not exit
+    }
+}
