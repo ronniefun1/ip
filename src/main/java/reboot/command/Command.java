@@ -3,7 +3,7 @@ package reboot.command;
 import reboot.RebootException;
 import reboot.Storage;
 import reboot.TaskList;
-import reboot.Ui;
+import reboot.gui.Gui;
 
 /**
  * Represents a generic command that will be parsed by Parser.
@@ -15,7 +15,7 @@ public abstract class Command {
      * Abstract method to execute the command.
      * Subclasses must provide their own implementation for commands.
      */
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws RebootException;
+    public abstract String execute(TaskList tasks, Gui ui, Storage storage) throws RebootException;
 
     /**
      * Returns true only for ExitCommand.

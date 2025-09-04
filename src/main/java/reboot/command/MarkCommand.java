@@ -3,7 +3,7 @@ package reboot.command;
 import reboot.RebootException;
 import reboot.Storage;
 import reboot.TaskList;
-import reboot.Ui;
+import reboot.gui.Gui;
 import reboot.task.Task;
 
 /**
@@ -24,14 +24,14 @@ public class MarkCommand extends Command {
     /**
      * Marks the specified task as completed in the tasklist.
      * Updates the tasklist file via storage.
-     * Informs the user via the ui.
+     * Informs the user via the gui.
      *
      * @param tasks Tasklist with the task to be mark as completed.
-     * @param ui Ui outputs message.
+     * @param gui Gui outputs message.
      * @param storage Storage writes lines to update file.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws RebootException {
+    public String execute(TaskList tasks, Gui gui, Storage storage) throws RebootException {
 
         if (tasks.isOutOfRange(index)) {
             throw new RebootException("Only numbers from 1 to " + tasks.size() + " are allowed");
@@ -40,6 +40,6 @@ public class MarkCommand extends Command {
         Task t = tasks.get(index - 1);
         t.mark();
         storage.writeFile(tasks.getAll());
-        ui.showMessage("    Marked\n" + "      " + t);
+        return gui.showMessage("Marked\n" + t);
     }
 }

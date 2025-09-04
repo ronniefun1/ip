@@ -3,7 +3,7 @@ package reboot.command;
 import reboot.RebootException;
 import reboot.Storage;
 import reboot.TaskList;
-import reboot.Ui;
+import reboot.gui.Gui;
 
 /**
  * Represents a command that displays the current tasklist if not empty.
@@ -16,15 +16,15 @@ public class ListCommand extends Command {
      * If not empty, display the current tasklist.
      *
      * @param tasks Tasklist to be displayed.
-     * @param ui Ui outputs message.
+     * @param gui Gui outputs message.
      * @param storage Storage writes lines to file.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws RebootException {
+    public String execute(TaskList tasks, Gui gui, Storage storage) throws RebootException {
         if (tasks.isEmpty()) {
-            ui.showMessage("list function is useless without any tasks");
+            return gui.showMessage("list function is useless without any tasks");
         } else {
-            ui.showTaskList(tasks);
+            return gui.showTaskList(tasks);
         }
     }
 }

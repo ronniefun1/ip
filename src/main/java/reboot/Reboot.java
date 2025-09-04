@@ -3,55 +3,48 @@ package reboot;
 import java.io.IOException;
 
 import reboot.command.Command;
+import reboot.gui.Gui;
 
 /**
  * Represents a chatbot that will be able to track tasks.
  */
 public class Reboot {
 
-    private static final String DEFAULT_FILE_PATH = "output/reboot.txt";
-
-    private Ui ui;
+    private final Gui gui;
     private TaskList tasks;
-    private Storage storage;
+    private final Storage storage;
+    private final String welcome;
 
     /**
      * Constructs a new Reboot chatbot when given a specified file path.
      * @param filePath Location of file to store data of tasklist.
      */
     public Reboot(String filePath) {
-        ui = new Ui();
+        gui = new Gui();
         storage = new Storage(filePath);
+        welcome = gui.showWelcome();
 
         try {
             tasks = new TaskList(storage.load());
         } catch (IOException e) {
-            ui.showError(e.getMessage());
+            gui.showError("Error reading file. Will start with a new tasklist");
             tasks = new TaskList();
+            storage.writeFile(tasks.getAll());
         }
     }
 
     /**
-     * Runs the chatbot which will constantly react to user input.
+     * Returns the welcome message.
      */
-    public void run() {
-        ui.showWelcome();
-        boolean isExit = false;
-        while (!isExit) {
-            try {
-                String fullCommand = ui.readCommand();
-                Command c = Parser.parse(fullCommand);
-                c.execute(tasks, ui, storage);
-                isExit = c.isExit();
-            } catch (RebootException e) {
-                ui.showError(e.getMessage());
-            } catch (IllegalArgumentException e) {
-                ui.showError("I do not understand your language");
-            }
-        }
+    public String getWelcome() {
+        return this.welcome;
     }
 
-    public static void main(String[] args) {
-        new Reboot(DEFAULT_FILE_PATH).run();
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        Command c = Parser.parse(input);
+        return c.execute(tasks, gui, storage);
     }
 }

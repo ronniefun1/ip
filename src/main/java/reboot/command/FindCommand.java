@@ -3,7 +3,7 @@ package reboot.command;
 import reboot.RebootException;
 import reboot.Storage;
 import reboot.TaskList;
-import reboot.Ui;
+import reboot.gui.Gui;
 
 /**
  * Represents a command to find a task with specified keyword.
@@ -22,20 +22,20 @@ public class FindCommand extends Command {
 
     /**
      * Finds all available tasks which contains the specified keyword.
-     * Outputs the list via ui.
+     * Outputs the list via gui.
      * @param tasks Tasklist to search for results.
-     * @param ui Ui to output results.
+     * @param gui Gui to output results.
      * @param storage Storage for writing and loading files.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws RebootException {
+    public String execute(TaskList tasks, Gui gui, Storage storage) throws RebootException {
 
         TaskList results = tasks.findTasks(keyword);
 
         if (results.isEmpty()) {
-            ui.showMessage("No tasks found matching: " + keyword);
+            return gui.showMessage("No tasks found matching: " + keyword);
         } else {
-            ui.showSearchResult(results, keyword);
+            return gui.showSearchResult(results, keyword);
         }
     }
 }

@@ -3,7 +3,7 @@ package reboot.command;
 import reboot.RebootException;
 import reboot.Storage;
 import reboot.TaskList;
-import reboot.Ui;
+import reboot.gui.Gui;
 import reboot.task.Deadline;
 import reboot.task.Event;
 import reboot.task.Task;
@@ -43,17 +43,18 @@ public class AddCommand extends Command {
     /**
      * Adds the specified task to the tasklist.
      * Updates the tasklist file via storage.
-     * Informs the user via the ui.
+     * Informs the user via the gui.
      *
      * @param tasks Tasklist takes in the task.
-     * @param ui Ui outputs message.
+     * @param gui Gui outputs message.
      * @param storage Storage appends line to file.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws RebootException {
+    public String execute(TaskList tasks, Gui gui, Storage storage) throws RebootException {
         tasks.add(task);
         storage.appendLine(task.toFileString());
-        ui.showMessage("    Updated\n      " + task
-                + "\n    " + tasks.size() + " tasks in the list");
+        return gui.showMessage("Updated" + task
+                + "\n" + tasks.size() + " tasks in the list");
+
     }
 }
