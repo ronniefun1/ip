@@ -3,7 +3,7 @@ package reboot.command;
 import reboot.RebootException;
 import reboot.Storage;
 import reboot.TaskList;
-import reboot.Ui;
+import reboot.gui.Gui;
 
 /**
  * Represents a command that ends the conversation with the chatbot.
@@ -11,22 +11,14 @@ import reboot.Ui;
 public class ExitCommand extends Command {
 
     /**
-     * Gives the user a bye message via the ui.
+     * Gives the user a bye message via the gui.
      *
      * @param tasks The current Tasklist.
-     * @param ui Ui outputs message.
+     * @param gui Gui outputs message.
      * @param storage Storage writes to the file.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws RebootException {
-        ui.showBye();
-    }
-
-    /**
-     * Changes isExit to true to exit the while loop in Reboot.
-     */
-    @Override
-    public boolean isExit() {
-        return true;
+    public String execute(TaskList tasks, Gui gui, Storage storage) throws RebootException {
+        return gui.showBye();
     }
 }

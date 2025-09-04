@@ -3,7 +3,7 @@ package reboot.command;
 import reboot.RebootException;
 import reboot.Storage;
 import reboot.TaskList;
-import reboot.Ui;
+import reboot.gui.Gui;
 import reboot.task.Task;
 
 /**
@@ -24,14 +24,14 @@ public class DeleteCommand extends Command {
     /**
      * Deletes the specified task from the tasklist.
      * Updates the tasklist file via storage.
-     * Informs the user via the ui.
+     * Informs the user via the gui.
      *
      * @param tasks Tasklist to delete the task from.
-     * @param ui Ui outputs message.
+     * @param gui Gui outputs message.
      * @param storage Storage rewrites file.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws RebootException {
+    public String execute(TaskList tasks, Gui gui, Storage storage) throws RebootException {
 
         // Throw exception when number provided is not within index
         if (tasks.isOutOfRange(index)) {
@@ -41,7 +41,7 @@ public class DeleteCommand extends Command {
         Task t = tasks.get(index - 1);
         tasks.remove(t);
         storage.writeFile(tasks.getAll());
-        ui.showMessage("    Deleting task\n      " + t
-                + "\n    " + tasks.size() + " tasks in the list\n");
+        return gui.showMessage("Deleting task " + t + "\n"
+                + tasks.size() + " tasks in the list\n");
     }
 }
