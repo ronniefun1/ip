@@ -1,9 +1,9 @@
 package reboot.command;
 
+import reboot.RebootException;
+import reboot.Storage;
 import reboot.TaskList;
 import reboot.Ui;
-import reboot.Storage;
-import reboot.RebootException;
 
 /**
  * Represents a command that ends the conversation with the chatbot.

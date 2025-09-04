@@ -8,13 +8,9 @@ import reboot.Ui;
 /**
  * Represents a command to find a task with specified keyword.
  */
-public class FindCommand extends Command{
+public class FindCommand extends Command {
 
     private final String keyword;
-
-    public String getKeyword() {
-        return this.keyword;
-    }
 
     /**
      * Constructs a FindCommand with the specified keyword.
@@ -39,7 +35,7 @@ public class FindCommand extends Command{
         if (results.isEmpty()) {
             ui.showMessage("No tasks found matching: " + keyword);
         } else {
-            ui.showSearchResult(results);
+            ui.showSearchResult(results, keyword);
         }
     }
 }

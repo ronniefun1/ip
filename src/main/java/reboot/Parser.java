@@ -1,6 +1,15 @@
 package reboot;
 
-import reboot.command.*;
+import reboot.command.AddCommand;
+import reboot.command.ClearCommand;
+import reboot.command.Command;
+import reboot.command.Commands;
+import reboot.command.DeleteCommand;
+import reboot.command.ExitCommand;
+import reboot.command.FindCommand;
+import reboot.command.ListCommand;
+import reboot.command.MarkCommand;
+import reboot.command.UnmarkCommand;
 import reboot.task.Deadline;
 import reboot.task.Event;
 import reboot.task.Todo;
@@ -25,13 +34,13 @@ public class Parser {
         case LIST:
             return new ListCommand();
         case MARK:
-            if (words.length ==  1) {
+            if (words.length == 1) {
                 throw new RebootException("Proper usage: mark {task index}");
             }
 
             return new MarkCommand(Integer.parseInt(words[1]));
         case UNMARK:
-            if (words.length ==  1) {
+            if (words.length == 1) {
                 throw new RebootException("Proper usage: unmmark {task index}");
             }
 

@@ -1,16 +1,16 @@
 package reboot;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.Test;
+
 import reboot.command.AddCommand;
 import reboot.command.ClearCommand;
 import reboot.command.Command;
 import reboot.command.FindCommand;
 import reboot.command.ListCommand;
-
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class ParserTest {
 
@@ -58,8 +58,9 @@ public class ParserTest {
             assertTrue(Parser.parse("deadline Read book") instanceof AddCommand);
             fail(); // the test should not reach this line
         } catch (Exception e) {
-            assertEquals("Reboot error: Proper usage: deadline {description} /by {due date}"
-                    , e.getMessage());
+            assertEquals(
+                    "Reboot error: Proper usage: deadline {description} /by {due date}",
+                    e.getMessage());
         }
     }
 
@@ -75,8 +76,9 @@ public class ParserTest {
             assertTrue(Parser.parse("event Read book /from 02 09 2025") instanceof AddCommand);
             fail(); // the test should not reach this line
         } catch (Exception e) {
-            assertEquals("Reboot error: Proper usage: event {description} /from {start date} /to {end date}"
-                    , e.getMessage());
+            assertEquals(
+                    "Reboot error: Proper usage: event {description} /from {start date} /to {end date}",
+                    e.getMessage());
         }
     }
 

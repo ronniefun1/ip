@@ -1,14 +1,15 @@
 package reboot;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import reboot.task.Deadline;
 import reboot.task.Event;
 import reboot.task.Task;
 import reboot.task.Todo;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TaskListTest {
 
@@ -18,8 +19,8 @@ public class TaskListTest {
         TaskList tasks = new TaskList();
         Task todo = new Todo("Read book", false);
         Task deadline = new Deadline("Do iP", false, "02 09 2025 2100");
-        Task event = new Event("Yoga Class", false
-                , "02 09 2025 1700", "02 09 2025 1900");
+        Task event = new Event("Yoga Class", false,
+                "02 09 2025 1700", "02 09 2025 1900");
 
         tasks.add(todo);
         tasks.add(deadline);
@@ -54,13 +55,13 @@ public class TaskListTest {
     public void addTask_eventTask_success() {
 
         TaskList tasks = new TaskList();
-        Task event = new Event("Yoga Class", false
-                , "02 09 2025 1700", "02 09 2025 1900");
+        Task event = new Event("Yoga Class", false,
+                "02 09 2025 1700", "02 09 2025 1900");
 
         tasks.add(event);
         assertEquals(1, tasks.size());
-        assertEquals("[E][ ] Yoga Class (from: 02 09 2025 1700 to: 02 09 2025 1900)"
-                , tasks.get(0).toString());
+        assertEquals("[E][ ] Yoga Class (from: 02 09 2025 1700 to: 02 09 2025 1900)",
+                tasks.get(0).toString());
     }
 
     @Test
@@ -81,8 +82,8 @@ public class TaskListTest {
         TaskList tasks = new TaskList();
         Task todo = new Todo("Read book", false);
         Task deadline = new Deadline("Do iP", false, "02 09 2025 2100");
-        Task event = new Event("Yoga Class", false
-                , "02 09 2025 1700", "02 09 2025 1900");
+        Task event = new Event("Yoga Class", false,
+                "02 09 2025 1700", "02 09 2025 1900");
 
         tasks.add(todo);
         tasks.add(deadline);
@@ -105,8 +106,8 @@ public class TaskListTest {
         TaskList tasks = new TaskList();
         Task todo = new Todo("Read book", false);
         Task deadline = new Deadline("Do iP", false, "02 09 2025 2100");
-        Task event = new Event("Yoga Class", false
-                , "02 09 2025 1700", "02 09 2025 1900");
+        Task event = new Event("Yoga Class", false,
+                "02 09 2025 1700", "02 09 2025 1900");
 
         tasks.add(todo);
         tasks.add(deadline);

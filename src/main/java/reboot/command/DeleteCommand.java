@@ -1,6 +1,9 @@
 package reboot.command;
 
-import reboot.*;
+import reboot.RebootException;
+import reboot.Storage;
+import reboot.TaskList;
+import reboot.Ui;
 import reboot.task.Task;
 
 /**
@@ -38,7 +41,7 @@ public class DeleteCommand extends Command {
         Task t = tasks.get(index - 1);
         tasks.remove(t);
         storage.writeFile(tasks.getAll());
-        ui.showMessage("    Deleting task\n      " + t +
-                "\n    " + tasks.size() + " tasks in the list\n");
+        ui.showMessage("    Deleting task\n      " + t
+                + "\n    " + tasks.size() + " tasks in the list\n");
     }
 }

@@ -1,9 +1,9 @@
 package reboot.command;
 
 import reboot.RebootException;
+import reboot.Storage;
 import reboot.TaskList;
 import reboot.Ui;
-import reboot.Storage;
 
 /**
  * Represents a command that clears the current tasklist.

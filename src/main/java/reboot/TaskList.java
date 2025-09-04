@@ -1,9 +1,9 @@
 package reboot;
 
-import reboot.task.Task;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import reboot.task.Task;
 
 /**
  * Represents a tasklist that will store all the user tasks.

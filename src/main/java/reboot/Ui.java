@@ -1,15 +1,15 @@
 package reboot;
 
-import reboot.task.Task;
-
 import java.util.Scanner;
+
+import reboot.task.Task;
 
 /**
  * Represents a UI that will interact with the user.
  */
 public class Ui {
 
-    Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
 
     /**
      * Prints a new line to segregate content for clarity.
@@ -23,8 +23,8 @@ public class Ui {
      */
     public void showWelcome() {
         showLine();
-        System.out.println("    Hello! I'm reboot.Reboot the best chatbot\n" +
-                "    What can the best chatbot do for you?");
+        System.out.println("    Hello! I'm reboot.Reboot the best chatbot\n"
+                + "    What can the best chatbot do for you?");
         showLine();
     }
 
@@ -82,9 +82,9 @@ public class Ui {
      * Displays the results of search in ui.
      * @param tasks Tasklist which contains the results of the search.
      */
-    public void showSearchResult(TaskList tasks) {
+    public void showSearchResult(TaskList tasks, String keyword) {
         showLine();
-        System.out.println("    Here are the results of searching:");
+        System.out.println("    Here are the results of searching: " + keyword);
         for (int i = 1; i < tasks.size() + 1; i++) {
             Task t = tasks.get(i - 1);
             System.out.println("    " + i + ". " + t);

@@ -1,18 +1,18 @@
 package reboot.command;
 
+import reboot.RebootException;
+import reboot.Storage;
+import reboot.TaskList;
+import reboot.Ui;
 import reboot.task.Deadline;
 import reboot.task.Event;
 import reboot.task.Task;
 import reboot.task.Todo;
-import reboot.TaskList;
-import reboot.Ui;
-import reboot.Storage;
-import reboot.RebootException;
 
 /**
  * Represents a command to add a new task to the tasklist.
  */
-public class AddCommand extends Command{
+public class AddCommand extends Command {
 
     private final Task task;
 
@@ -53,7 +53,7 @@ public class AddCommand extends Command{
     public void execute(TaskList tasks, Ui ui, Storage storage) throws RebootException {
         tasks.add(task);
         storage.appendLine(task.toFileString());
-        ui.showMessage("    Updated\n      " + task +
-                "\n    " + tasks.size() + " tasks in the list");
+        ui.showMessage("    Updated\n      " + task
+                + "\n    " + tasks.size() + " tasks in the list");
     }
 }

@@ -1,10 +1,5 @@
 package reboot;
 
-import reboot.task.Deadline;
-import reboot.task.Event;
-import reboot.task.Task;
-import reboot.task.Todo;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,6 +8,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import reboot.task.Deadline;
+import reboot.task.Event;
+import reboot.task.Task;
+import reboot.task.Todo;
 
 /**
  * Represents a storage location that will deal with writing to
@@ -95,7 +95,7 @@ public class Storage {
         try (BufferedWriter writer = Files.newBufferedWriter(
                 file,
                 java.nio.file.StandardOpenOption.CREATE,
-                java.nio.file.StandardOpenOption.APPEND)){
+                java.nio.file.StandardOpenOption.APPEND)) {
             writer.write(line);
             writer.newLine();
         } catch (IOException e) {
