@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import reboot.task.Deadline;
 import reboot.task.Event;
@@ -53,18 +54,12 @@ public class Storage {
     /**
      * Returns the tasklist from previous sessions from the storage location
      */
-    public ArrayList<Task> load() throws IOException {
+    public List<Task> load() throws IOException {
         checkFile();
-        ArrayList<Task> taskList = new ArrayList<>();
+        List<Task> taskList;
         try {
             List<String> lines = Files.readAllLines(file);
-            for (String line : lines) {
-                if (line.startsWith("T") || line.startsWith("E")
-                        || line.startsWith("D")) {
-                    Optional<Task> t = createTask(line);
-                    t.ifPresent(taskList::add);
-                }
-            }
+            taskList = generateTasklistFromStringList(lines);
         } catch (IOException e) {
             throw new RebootException(e.getMessage());
         }
@@ -128,5 +123,16 @@ public class Storage {
         default:
             return Optional.empty();
         }
+    }
+
+    private static List<Task> generateTasklistFromStringList(
+            List<String> lines) {
+        return lines.stream()
+                .filter(line -> line.startsWith("T") || line.startsWith("E")
+                        || line.startsWith("D"))
+                .map(Storage::createTask)
+                .filter(Optional::isPresent)
+                .flatMap(Optional::stream)
+                .collect(Collectors.toList());
     }
 }
