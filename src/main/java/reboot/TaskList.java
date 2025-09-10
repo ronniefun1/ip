@@ -45,6 +45,7 @@ public class TaskList {
      * @param t task to be removed from tasklist.
      */
     public void remove(Task t) {
+        assert t != null : "Task out of bounds";
         tasks.remove(t);
     }
 
@@ -60,6 +61,7 @@ public class TaskList {
      * @param index Index of the specified task in tasklist
      */
     public Task get(int index) {
+        assert index >= 0 && index < tasks.size() : "Index out of bounds";
         return tasks.get(index);
     }
 
