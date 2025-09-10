@@ -15,7 +15,7 @@ import reboot.Reboot;
  */
 public class Main extends Application {
 
-    private final Reboot reboot = new Reboot("output/reboot.txt");
+    private final Reboot reboot = new Reboot("reboot.txt");
 
     @Override
     public void start(Stage stage) {
