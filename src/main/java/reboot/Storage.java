@@ -26,7 +26,6 @@ public class Storage {
      * @param filePath Location of file to store data of tasklist.
      */
     public Storage(String filePath) {
-
         this.file = Paths.get("output", filePath);
     }
 

@@ -36,6 +36,8 @@ public class UnmarkCommand extends Command {
             throw new RebootException("Only numbers from 1 to " + tasks.size() + " are allowed");
         }
 
+        assert index >= 0 && index < tasks.size() : "Delete index out of bounds";
+
         Task t = tasks.get(index - 1);
         t.unmark();
         storage.writeFile(tasks.getAll());
