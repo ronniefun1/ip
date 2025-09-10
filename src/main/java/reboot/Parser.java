@@ -1,5 +1,9 @@
 package reboot;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import reboot.command.AddCommand;
 import reboot.command.ClearCommand;
 import reboot.command.Command;
@@ -64,7 +68,15 @@ public class Parser {
                     throw new RebootException("Proper usage: deadline {description} /by {due date}");
                 }
 
-                return new AddCommand(new Deadline(words[0], false, words[1]));
+                try {
+                    // Try to parse with datetime
+                    LocalDateTime dueDateTime = parseDateAndTime(words[1]);
+                    return new AddCommand(new Deadline(words[0], false, dueDateTime));
+                } catch (Exception e) {
+                    // Otherwise parse as date only
+                    LocalDate dueDate = parseDateOnly(words[1]);
+                    return new AddCommand(new Deadline(words[0], false, dueDate));
+                }
             case EVENT:
                 if (words.length == 1) {
                     throw new RebootException(
@@ -87,7 +99,17 @@ public class Parser {
                             "Proper usage: event {description} /from {start date} /to {end date}");
                 }
 
-                return new AddCommand(new Event(description, false, words[0], words[1]));
+                try {
+                    // Try to parse with datetime
+                    LocalDateTime startDateTime = parseDateAndTime(dates[0]);
+                    LocalDateTime endDateTime = parseDateAndTime(dates[1]);
+                    return new AddCommand(new Event(description, false, startDateTime, endDateTime));
+                } catch (Exception e) {
+                    // Otherwise parse as date only
+                    LocalDate startDate = parseDateOnly(dates[0]);
+                    LocalDate endDate = parseDateOnly(dates[1]);
+                    return new AddCommand(new Event(description, false, startDate, endDate));
+                }
             case DELETE:
                 if (words.length == 1) {
                     throw new RebootException("Proper usage: delete {task index}");
@@ -111,5 +133,53 @@ public class Parser {
         }  catch (IllegalArgumentException e) {
             return new ErrorCommand("I do not understand your language");
         }
+    }
+
+    /**
+     * Converts the given string to date format.
+     * @param input String to be converted to date format.
+     */
+    public static LocalDate parseDateOnly(String input) {
+        DateTimeFormatter[] formats = {
+                DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+                DateTimeFormatter.ofPattern("dd-MM-yyyy"),
+                DateTimeFormatter.ofPattern("dd/MM/yyyy"),
+                DateTimeFormatter.ofPattern("yyyy/MM/dd"),
+                DateTimeFormatter.ofPattern("dd MM yyyy"),
+                DateTimeFormatter.ofPattern("yyyy MM dd")
+        };
+
+        for (DateTimeFormatter format : formats) {
+            try {
+                return LocalDate.parse(input, format);
+            } catch (Exception e) {
+                // Ignore and try next
+            }
+        }
+        throw new IllegalArgumentException("Invalid date format.");
+    }
+
+    /**
+     * Converts the given string to date time format.
+     * @param input String to be converted to date time format.
+     */
+    public static LocalDateTime parseDateAndTime(String input) {
+        DateTimeFormatter[] formats = {
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
+                DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm"),
+                DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm"),
+                DateTimeFormatter.ofPattern("yyyy/MM/dd HHmm"),
+                DateTimeFormatter.ofPattern("dd MM yyyy HHmm"),
+                DateTimeFormatter.ofPattern("yyyy MM dd HHmm")
+        };
+
+        for (DateTimeFormatter format : formats) {
+            try {
+                return LocalDateTime.parse(input, format);
+            } catch (Exception e) {
+                // Ignore and try next
+            }
+        }
+        throw new IllegalArgumentException("Invalid date format.");
     }
 }

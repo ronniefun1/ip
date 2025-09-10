@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import reboot.command.AddCommand;
 import reboot.command.ClearCommand;
 import reboot.command.Command;
+import reboot.command.ErrorCommand;
 import reboot.command.FindCommand;
 import reboot.command.ListCommand;
 
@@ -22,12 +23,7 @@ public class ParserTest {
 
     @Test
     public void parse_invalidCommand_throwsException() {
-        try {
-            assertTrue(Parser.parse("goodbye") instanceof Command);
-            fail(); // the test should not reach this line
-        } catch (Exception e) {
-            assertEquals("No enum constant reboot.command.Commands.GOODBYE", e.getMessage());
-        }
+        assertTrue(Parser.parse("goodbye") instanceof ErrorCommand);
     }
 
     @Test
@@ -37,13 +33,8 @@ public class ParserTest {
     }
 
     @Test
-    public void parse_todoCommandWithoutDescription_throwsException() {
-        try {
-            assertTrue(Parser.parse("todo") instanceof AddCommand);
-            fail(); // the test should not reach this line
-        } catch (Exception e) {
-            assertEquals("Reboot error: Proper usage: todo {description}", e.getMessage());
-        }
+    public void parse_todoCommandWithoutDescription_returnsErrorCommand() {
+        assertTrue(Parser.parse("todo") instanceof ErrorCommand);
     }
 
     @Test
@@ -53,15 +44,8 @@ public class ParserTest {
     }
 
     @Test
-    public void parse_deadlineCommandWithoutDueDate_throwsException() {
-        try {
-            assertTrue(Parser.parse("deadline Read book") instanceof AddCommand);
-            fail(); // the test should not reach this line
-        } catch (Exception e) {
-            assertEquals(
-                    "Reboot error: Proper usage: deadline {description} /by {due date}",
-                    e.getMessage());
-        }
+    public void parse_deadlineCommandWithoutDueDate_returnsErrorCommand() {
+        assertTrue(Parser.parse("deadline Read book") instanceof ErrorCommand);
     }
 
     @Test
@@ -71,15 +55,8 @@ public class ParserTest {
     }
 
     @Test
-    public void parse_eventCommandWithoutEndDate_throwsException() {
-        try {
-            assertTrue(Parser.parse("event Read book /from 02 09 2025") instanceof AddCommand);
-            fail(); // the test should not reach this line
-        } catch (Exception e) {
-            assertEquals(
-                    "Reboot error: Proper usage: event {description} /from {start date} /to {end date}",
-                    e.getMessage());
-        }
+    public void parse_eventCommandWithoutEndDate_returnsErrorCommand() {
+        assertTrue(Parser.parse("event Read book /from 02 09 2025") instanceof ErrorCommand);
     }
 
     @Test

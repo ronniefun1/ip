@@ -19,7 +19,7 @@ public class ErrorCommand extends Command{
     }
 
     @Override
-    public String execute(TaskList tasks, Gui ui, Storage storage) {
-        return ui.showError(message);
+    public String execute(TaskList tasks, Gui gui, Storage storage) {
+        return gui.showError(message);
     }
 }

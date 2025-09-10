@@ -113,9 +113,19 @@ public class Storage {
         case "T":
             return Optional.of(new Todo(description, status));
         case "D":
-            return Optional.of(new Deadline(description, status, parts[3]));
+            try {
+                return Optional.of(new Deadline(description, status, Parser.parseDateOnly(parts[3])));
+            } catch (Exception e) {
+                return Optional.of(new Deadline(description, status, Parser.parseDateAndTime(parts[3])));
+            }
         case "E":
-            return Optional.of(new Event(description, status, parts[3], parts[4]));
+            try {
+                return Optional.of(new Event(description, status,
+                        Parser.parseDateOnly(parts[3]), Parser.parseDateOnly(parts[4])));
+            } catch (Exception e) {
+                return Optional.of(new Event(description, status,
+                        Parser.parseDateAndTime(parts[3]), Parser.parseDateAndTime(parts[4])));
+            }
         default:
             return Optional.empty();
         }
