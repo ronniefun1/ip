@@ -47,7 +47,7 @@ public class Storage {
             }
 
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            throw new RebootException(e.getMessage());
         }
     }
 
@@ -67,7 +67,7 @@ public class Storage {
                 }
             }
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            throw new RebootException(e.getMessage());
         }
         return taskList;
     }
@@ -83,7 +83,7 @@ public class Storage {
                 writer.write(System.lineSeparator());
             }
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            throw new RebootException(e.getMessage());
         }
     }
 
@@ -99,7 +99,7 @@ public class Storage {
             writer.write(line);
             writer.newLine();
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            throw new RebootException(e.getMessage());
         }
     }
 

@@ -111,6 +111,5 @@ public class Parser {
         }  catch (IllegalArgumentException e) {
             return new ErrorCommand("I do not understand your language");
         }
-
     }
 }
