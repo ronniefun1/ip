@@ -1,5 +1,9 @@
 package reboot;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import reboot.command.AddCommand;
 import reboot.command.ClearCommand;
 import reboot.command.Command;
@@ -36,7 +40,7 @@ public class Parser {
             case LIST:
                 return new ListCommand();
             case MARK:
-                if (!Parser.isInteger(words[1])) {
+                if (Parser.isNotInteger(words[1])) {
                     throw new RebootException("Proper usage: mark {task index}");
                 }
 
@@ -48,15 +52,13 @@ public class Parser {
 
                 return new MarkCommand(Integer.parseInt(words[1]));
             case UNMARK:
-                if (!Parser.isInteger(words[1])) {
+                if (Parser.isNotInteger(words[1])) {
                     throw new RebootException("Proper usage: unmark {task index}");
                 }
 
                 if (Integer.parseInt(words[1]) < 1) {
                     throw new RebootException("Ensure that task index is more than 0");
                 }
-
-                assert words[1] != null : "Index should not be null";
 
                 return new UnmarkCommand(Integer.parseInt(words[1]));
             case TODO:
@@ -81,9 +83,15 @@ public class Parser {
                     throw new RebootException("Proper usage: deadline {description} /by {due date}");
                 }
 
-                assert words[1] != null : "Due date should not be null";
-
-                return new AddCommand(new Deadline(words[0], false, words[1]));
+                try {
+                    // Try to parse with datetime
+                    LocalDateTime dueDateTime = parseDateAndTime(words[1]);
+                    return new AddCommand(new Deadline(words[0], false, dueDateTime));
+                } catch (Exception e) {
+                    // Otherwise parse as date only
+                    LocalDate dueDate = parseDateOnly(words[1]);
+                    return new AddCommand(new Deadline(words[0], false, dueDate));
+                }
             case EVENT:
                 if (words.length == 1) {
                     throw new RebootException(
@@ -104,27 +112,32 @@ public class Parser {
 
                 String description = words[0];
 
-                // Separate the start and end dates
-                words = words[1].split(" /to ");
+                String[] dates = words[1].split(" /to ");
 
-                if (words.length == 1) {
+                if (dates.length == 1) {
                     throw new RebootException(
                             "Proper usage: event {description} /from {start date} /to {end date}");
                 }
 
-                assert words[1] != null : "End date should not be null";
-
-                return new AddCommand(new Event(description, false, words[0], words[1]));
+                try {
+                    // Try to parse with datetime
+                    LocalDateTime startDateTime = parseDateAndTime(dates[0]);
+                    LocalDateTime endDateTime = parseDateAndTime(dates[1]);
+                    return new AddCommand(new Event(description, false, startDateTime, endDateTime));
+                } catch (Exception e) {
+                    // Otherwise parse as date only
+                    LocalDate startDate = parseDateOnly(dates[0]);
+                    LocalDate endDate = parseDateOnly(dates[1]);
+                    return new AddCommand(new Event(description, false, startDate, endDate));
+                }
             case DELETE:
-                if (!Parser.isInteger(words[1])) {
+                if (Parser.isNotInteger(words[1])) {
                     throw new RebootException("Proper usage: delete {task index}");
                 }
 
                 if (Integer.parseInt(words[1]) < 1) {
                     throw new RebootException("Ensure that task index is more than 0");
                 }
-
-                assert words[1] != null : "Index should not be null";
 
                 return new DeleteCommand(Integer.parseInt(words[1]));
             case CLEAR:
@@ -148,16 +161,66 @@ public class Parser {
         }
     }
 
-    public static boolean isInteger(String str) {
+    public static boolean isNotInteger(String str) {
         if (str == null || str.isEmpty()) {
-            return false;
+            return true;
         }
 
         try {
             Integer.parseInt(str);
-            return true;
-        } catch (NumberFormatException e) {
             return false;
+        } catch (NumberFormatException e) {
+            return true;
         }
+
+    }
+
+    /**
+     * Converts the given string to date format.
+     *
+     * @param input String to be converted to date format.
+     */
+    public static LocalDate parseDateOnly(String input) {
+        DateTimeFormatter[] formats = {
+                DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+                DateTimeFormatter.ofPattern("dd-MM-yyyy"),
+                DateTimeFormatter.ofPattern("dd/MM/yyyy"),
+                DateTimeFormatter.ofPattern("yyyy/MM/dd"),
+                DateTimeFormatter.ofPattern("dd MM yyyy"),
+                DateTimeFormatter.ofPattern("yyyy MM dd")
+        };
+
+        for (DateTimeFormatter format : formats) {
+            try {
+                return LocalDate.parse(input, format);
+            } catch (Exception e) {
+                // Ignore and try next
+            }
+        }
+        throw new IllegalArgumentException("Invalid date format.");
+    }
+
+    /**
+     * Converts the given string to date time format.
+     * @param input String to be converted to date time format.
+     */
+    public static LocalDateTime parseDateAndTime(String input) {
+        DateTimeFormatter[] formats = {
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
+                DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm"),
+                DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm"),
+                DateTimeFormatter.ofPattern("yyyy/MM/dd HHmm"),
+                DateTimeFormatter.ofPattern("dd MM yyyy HHmm"),
+                DateTimeFormatter.ofPattern("yyyy MM dd HHmm")
+        };
+
+        for (DateTimeFormatter format : formats) {
+            try {
+                return LocalDateTime.parse(input, format);
+            } catch (Exception e) {
+                // Ignore and try next
+            }
+        }
+        throw new IllegalArgumentException("Invalid date format.");
     }
 }

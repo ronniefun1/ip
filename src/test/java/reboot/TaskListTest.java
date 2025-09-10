@@ -5,11 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import reboot.task.Deadline;
 import reboot.task.Event;
 import reboot.task.Task;
 import reboot.task.Todo;
-
 
 public class TaskListTest {
 
@@ -18,9 +19,11 @@ public class TaskListTest {
 
         TaskList tasks = new TaskList();
         Task todo = new Todo("Read book", false);
-        Task deadline = new Deadline("Do iP", false, "02 09 2025 2100");
+        Task deadline = new Deadline("Do iP", false,
+                LocalDateTime.of(2025, 9, 2, 21, 0));
         Task event = new Event("Yoga Class", false,
-                "02 09 2025 1700", "02 09 2025 1900");
+                LocalDateTime.of(2025, 9, 2, 17, 0),
+                LocalDateTime.of(2025, 9, 2, 19, 0));
 
         tasks.add(todo);
         tasks.add(deadline);
@@ -44,7 +47,8 @@ public class TaskListTest {
     public void addTask_deadlineTask_success() {
 
         TaskList tasks = new TaskList();
-        Task deadline = new Deadline("Do iP", false, "02 09 2025 2100");
+        Task deadline = new Deadline("Do iP", false,
+                LocalDateTime.of(2025, 9, 2, 21, 0));
 
         tasks.add(deadline);
         assertEquals(1, tasks.size());
@@ -56,7 +60,8 @@ public class TaskListTest {
 
         TaskList tasks = new TaskList();
         Task event = new Event("Yoga Class", false,
-                "02 09 2025 1700", "02 09 2025 1900");
+                LocalDateTime.of(2025, 9, 2, 17, 0),
+                LocalDateTime.of(2025, 9, 2, 19, 0));
 
         tasks.add(event);
         assertEquals(1, tasks.size());
@@ -81,9 +86,12 @@ public class TaskListTest {
 
         TaskList tasks = new TaskList();
         Task todo = new Todo("Read book", false);
-        Task deadline = new Deadline("Do iP", false, "02 09 2025 2100");
+        Task deadline = new Deadline("Do iP", false,
+                LocalDateTime.of(2025, 9, 2, 21, 0)
+        );
         Task event = new Event("Yoga Class", false,
-                "02 09 2025 1700", "02 09 2025 1900");
+                LocalDateTime.of(2025, 9, 2, 17, 0),
+                LocalDateTime.of(2025, 9, 2, 19, 0));
 
         tasks.add(todo);
         tasks.add(deadline);
@@ -105,9 +113,11 @@ public class TaskListTest {
 
         TaskList tasks = new TaskList();
         Task todo = new Todo("Read book", false);
-        Task deadline = new Deadline("Do iP", false, "02 09 2025 2100");
+        Task deadline = new Deadline("Do iP", false,
+                LocalDateTime.of(2025, 9, 2, 21, 0));
         Task event = new Event("Yoga Class", false,
-                "02 09 2025 1700", "02 09 2025 1900");
+                LocalDateTime.of(2025, 9, 2, 17, 0),
+                LocalDateTime.of(2025, 9, 2, 19, 0));
 
         tasks.add(todo);
         tasks.add(deadline);
