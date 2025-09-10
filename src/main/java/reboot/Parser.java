@@ -58,10 +58,8 @@ public class Parser {
                     throw new RebootException("Proper usage: deadline {description} /by {due date}");
                 }
 
-                // Get the description and due date of task
                 words = words[1].split(" /by ");
-
-                // Throw exception if either fields are empty
+                
                 if (words.length == 1) {
                     throw new RebootException("Proper usage: deadline {description} /by {due date}");
                 }
@@ -73,10 +71,8 @@ public class Parser {
                             "Proper usage: event {description} /from {start date} /to {end date}");
                 }
 
-                // Separate the description and the start/end dates
                 words = words[1].split(" /from ");
 
-                //Throw exception if description or dates are missing
                 if (words.length == 1) {
                     throw new RebootException(
                             "Proper usage: event {description} /from {start date} /to {end date}");
@@ -84,11 +80,9 @@ public class Parser {
 
                 String description = words[0];
 
-                // Separate the start and end dates
-                words = words[1].split(" /to ");
+                String[] dates = words[1].split(" /to ");
 
-                //Throw exception if either date is missing
-                if (words.length == 1) {
+                if (dates.length == 1) {
                     throw new RebootException(
                             "Proper usage: event {description} /from {start date} /to {end date}");
                 }
