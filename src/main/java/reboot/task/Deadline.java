@@ -18,9 +18,14 @@ public class Deadline extends Task {
      * @param isDone Status of the task.
      * @param dueDate Due date of the task.
      */
-    public Deadline(String description, boolean isDone, String dueDate) {
+    public Deadline(String description, boolean isDone, LocalDate dueDate) {
         super(description, isDone);
-        parseInput(dueDate);
+        this.dueDate = dueDate;
+    }
+
+    public Deadline(String description, boolean isDone, LocalDateTime dueDateTime) {
+        super(description, isDone);
+        this.dueDateTime = dueDateTime;
     }
 
     /**
@@ -51,63 +56,5 @@ public class Deadline extends Task {
             DateTimeFormatter output = DateTimeFormatter.ofPattern("dd MM yyyy HHmm");
             return "[D]" + super.toString() + " (by: " + dueDateTime.format(output) + ")";
         }
-    }
-
-    private void parseInput(String input) {
-        try {
-            // Try to parse with datetime
-            this.dueDateTime = parseDateTime(input);
-        } catch (Exception e) {
-            // Otherwise parse as date only
-            this.dueDate = parseDate(input);
-        }
-    }
-
-    /**
-     * Converts the given string to date time format.
-     * @param input String to be converted to date time format.
-     */
-    public static LocalDateTime parseDateTime(String input) {
-        DateTimeFormatter[] formats = {
-                DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
-                DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm"),
-                DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm"),
-                DateTimeFormatter.ofPattern("yyyy/MM/dd HHmm"),
-                DateTimeFormatter.ofPattern("dd MM yyyy HHmm"),
-                DateTimeFormatter.ofPattern("yyyy MM dd HHmm")
-        };
-
-        for (DateTimeFormatter format : formats) {
-            try {
-                return LocalDateTime.parse(input, format);
-            } catch (Exception e) {
-                // Ignore and try next
-            }
-        }
-        throw new IllegalArgumentException("Invalid date format.");
-    }
-
-    /**
-     * Converts the given string to date format.
-     * @param input String to be converted to date format.
-     */
-    public static LocalDate parseDate(String input) {
-        DateTimeFormatter[] formats = {
-                DateTimeFormatter.ofPattern("yyyy-MM-dd"),
-                DateTimeFormatter.ofPattern("dd-MM-yyyy"),
-                DateTimeFormatter.ofPattern("dd/MM/yyyy"),
-                DateTimeFormatter.ofPattern("yyyy/MM/dd"),
-                DateTimeFormatter.ofPattern("dd MM yyyy"),
-                DateTimeFormatter.ofPattern("yyyy MM dd")
-        };
-
-        for (DateTimeFormatter format : formats) {
-            try {
-                return LocalDate.parse(input, format);
-            } catch (Exception e) {
-                // Ignore and try next
-            }
-        }
-        throw new IllegalArgumentException("Invalid date format.");
     }
 }

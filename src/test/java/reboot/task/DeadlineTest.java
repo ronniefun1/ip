@@ -1,5 +1,8 @@
 package reboot.task;
 
+import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -9,7 +12,7 @@ public class DeadlineTest {
     @Test
     public void toString_withDateOnly_success() {
         Deadline d = new Deadline("return book", false,
-                "2025-12-02");
+                LocalDate.of(2025, 12, 2));
         String expected = "[D][ ] return book (by: 02 12 2025)";
         assertEquals(expected, d.toString());
     }
@@ -17,15 +20,15 @@ public class DeadlineTest {
     @Test
     public void toString_withDateTime_success() {
         Deadline d = new Deadline("return book", false,
-                "2025-12-02 1800");
-        String expected = "[D][ ] return book (by: 02 12 2025 1800)";
+                LocalDateTime.of(2025, 12, 2, 21, 0));
+        String expected = "[D][ ] return book (by: 02 12 2025 2100)";
         assertEquals(expected, d.toString());
     }
 
     @Test
     public void toFileString_withDateOnly_success() {
         Deadline d = new Deadline("return book", false,
-                "2025-12-02");
+                LocalDate.of(2025, 12, 2));
         String expected = "D | 0 | return book | 02 12 2025";
         assertEquals(expected, d.toFileString());
     }
@@ -33,8 +36,8 @@ public class DeadlineTest {
     @Test
     public void toFileString_withDateTime_success() {
         Deadline d = new Deadline("return book", false,
-                "2025-12-02 1800");
-        String expected = "D | 0 | return book | 02 12 2025 1800";
+                LocalDateTime.of(2025, 12, 2, 21, 0));
+        String expected = "D | 0 | return book | 02 12 2025 2100";
         assertEquals(expected, d.toFileString());
     }
 }
