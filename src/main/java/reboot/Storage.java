@@ -26,7 +26,6 @@ public class Storage {
      * @param filePath Location of file to store data of tasklist.
      */
     public Storage(String filePath) {
-
         this.file = Paths.get("output", filePath);
     }
 
@@ -47,7 +46,7 @@ public class Storage {
             }
 
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            throw new RebootException(e.getMessage());
         }
     }
 
@@ -67,7 +66,7 @@ public class Storage {
                 }
             }
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            throw new RebootException(e.getMessage());
         }
         return taskList;
     }
@@ -83,7 +82,7 @@ public class Storage {
                 writer.write(System.lineSeparator());
             }
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            throw new RebootException(e.getMessage());
         }
     }
 
@@ -99,7 +98,7 @@ public class Storage {
             writer.write(line);
             writer.newLine();
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            throw new RebootException(e.getMessage());
         }
     }
 
