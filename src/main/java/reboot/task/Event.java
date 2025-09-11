@@ -43,6 +43,38 @@ public class Event extends Task {
         endDateTime = end;
     }
 
+    public LocalDateTime getStartDateTime() {
+        return this.startDateTime;
+    }
+
+    public LocalDate getStartDate() {
+        return this.startDate;
+    }
+
+    public void setStartDateTime(LocalDateTime dateTime) {
+        this.startDateTime = dateTime;
+    }
+
+    public void setStartDate(LocalDate date) {
+        this.startDate = date;
+    }
+
+    public LocalDateTime getEndDateTime() {
+        return this.endDateTime;
+    }
+
+    public LocalDate getEndDate() {
+        return this.endDate;
+    }
+
+    public void setEndDateTime(LocalDateTime dateTime) {
+        this.endDateTime = dateTime;
+    }
+
+    public void setEndDate(LocalDate date) {
+        this.endDate = date;
+    }
+
     /**
      * Converts the task to a string that can be stored in a file.
      */

@@ -30,6 +30,7 @@ public class FindCommand extends Command {
     @Override
     public String execute(TaskList tasks, Gui gui, Storage storage) throws RebootException {
 
+        tasks.updateTasks();
         TaskList results = tasks.findTasks(keyword);
 
         if (results.isEmpty()) {

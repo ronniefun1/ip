@@ -22,8 +22,9 @@ public class ListCommand extends Command {
     @Override
     public String execute(TaskList tasks, Gui gui, Storage storage) throws RebootException {
         if (tasks.isEmpty()) {
-            return gui.showMessage("list function is useless without any tasks");
+            return gui.showMessage("List function is useless without any tasks");
         } else {
+            tasks.updateTasks();
             return gui.showTaskList(tasks);
         }
     }

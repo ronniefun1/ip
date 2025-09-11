@@ -39,6 +39,7 @@ public class MarkCommand extends Command {
 
         assert index >= 0 && index < tasks.size() : "Delete index out of bounds";
 
+        tasks.updateTasks();
         Task t = tasks.get(index - 1);
         t.mark();
         storage.writeFile(tasks.getAll());

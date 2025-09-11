@@ -8,6 +8,9 @@ import reboot.task.Deadline;
 import reboot.task.Event;
 import reboot.task.Task;
 import reboot.task.Todo;
+import reboot.task.reccuring.RecurringDeadline;
+import reboot.task.reccuring.RecurringEvent;
+import reboot.task.reccuring.RecurringTodo;
 
 /**
  * Represents a command to add a new task to the tasklist.
@@ -37,6 +40,30 @@ public class AddCommand extends Command {
      * @param task Event task to be added to the tasklist.
      */
     public AddCommand(Event task) {
+        this.task = task;
+    }
+
+    /**
+     * Constructs a new AddCommand with the given RecurringTodo task.
+     * @param task RecurringTodo task to be added to the tasklist.
+     */
+    public AddCommand(RecurringTodo task) {
+        this.task = task;
+    }
+
+    /**
+     * Constructs a new AddCommand with the given RecurringDeadline task.
+     * @param task RecurringDeadline task to be added to the tasklist.
+     */
+    public AddCommand(RecurringDeadline task) {
+        this.task = task;
+    }
+
+    /**
+     * Constructs a new AddCommand with the given RecurringEvent task.
+     * @param task RecurringEvent task to be added to the tasklist.
+     */
+    public AddCommand(RecurringEvent task) {
         this.task = task;
     }
 

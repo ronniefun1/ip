@@ -28,6 +28,22 @@ public class Deadline extends Task {
         this.dueDateTime = dueDateTime;
     }
 
+    public LocalDateTime getDueDateTime() {
+        return this.dueDateTime;
+    }
+
+    public LocalDate getDueDate() {
+        return this.dueDate;
+    }
+
+    public void setDueDateTime(LocalDateTime dateTime) {
+        this.dueDateTime = dateTime;
+    }
+
+    public void setDueDate(LocalDate date) {
+        this.dueDate = date;
+    }
+
     /**
      * Converts the task to a string that can be stored in a file.
      */

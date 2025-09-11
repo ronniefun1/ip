@@ -3,7 +3,13 @@ package reboot;
 import java.util.ArrayList;
 import java.util.List;
 
+import reboot.task.Deadline;
+import reboot.task.Event;
 import reboot.task.Task;
+import reboot.task.Todo;
+import reboot.task.reccuring.RecurringDeadline;
+import reboot.task.reccuring.RecurringEvent;
+import reboot.task.reccuring.RecurringTodo;
 
 /**
  * Represents a tasklist that will store all the user tasks.
@@ -102,5 +108,42 @@ public class TaskList {
         }
 
         return results;
+    }
+
+    public void updateTasks() {
+        for (Task task : tasks) {
+            if (task instanceof Todo) {
+                updateRecurringTodo((Todo) task);
+            } else if (task instanceof Deadline) {
+                updateRecurringDeadline((Deadline) task);
+            } else {
+                updateRecurringEvent((Event) task);
+            }
+        }
+    }
+    private static void updateRecurringTodo(Todo t) {
+        if (t instanceof RecurringTodo) {
+            ((RecurringTodo) t).updateDateIfOverdue();
+        }
+    }
+
+    private static void updateRecurringDeadline(Deadline d) {
+        if (d instanceof RecurringDeadline) {
+            if (d.getDueDate() != null) {
+                ((RecurringDeadline) d).updateDateIfOverdue();
+            } else {
+                ((RecurringDeadline) d).updateDateTimeIfOverdue();
+            }
+        }
+    }
+
+    private static void updateRecurringEvent(Event e) {
+        if (e instanceof RecurringEvent) {
+            if (e.getStartDate() != null) {
+                ((RecurringEvent) e).updateDateIfOverdue();
+            } else {
+                ((RecurringEvent) e).updateDateTimeIfOverdue();
+            }
+        }
     }
 }

@@ -18,6 +18,9 @@ import reboot.command.UnmarkCommand;
 import reboot.task.Deadline;
 import reboot.task.Event;
 import reboot.task.Todo;
+import reboot.task.reccuring.RecurringDeadline;
+import reboot.task.reccuring.RecurringEvent;
+import reboot.task.reccuring.RecurringTodo;
 
 /**
  * Represents a parser that will make sense of user input.
@@ -68,7 +71,16 @@ public class Parser {
 
                 assert words[1] != null : "Description should not be null";
 
-                return new AddCommand(new Todo(words[1], false));
+                String[] todoStrings = words[1].split(" /recurring ", 2);
+
+                boolean isRecurringTodo = todoStrings.length != 1;
+
+                if (isRecurringTodo) {
+                    return new AddCommand(new RecurringTodo(todoStrings[0], false, todoStrings[1]));
+                } else {
+                    return new AddCommand(new Todo(words[1], false));
+                }
+
             case DEADLINE:
                 if (words.length == 1) {
                     throw new RebootException("Proper usage: deadline {description} /by {due date}");
@@ -83,15 +95,34 @@ public class Parser {
                     throw new RebootException("Proper usage: deadline {description} /by {due date}");
                 }
 
-                try {
-                    // Try to parse with datetime
-                    LocalDateTime dueDateTime = parseDateAndTime(words[1]);
-                    return new AddCommand(new Deadline(words[0], false, dueDateTime));
-                } catch (Exception e) {
-                    // Otherwise parse as date only
-                    LocalDate dueDate = parseDateOnly(words[1]);
-                    return new AddCommand(new Deadline(words[0], false, dueDate));
+                String[] deadlineStrings = words[1].split(" /recurring ", 2);
+
+                boolean isRecurringDeadline = deadlineStrings.length != 1;
+
+                if (isRecurringDeadline) {
+                    try {
+                        // Try to parse with datetime
+                        LocalDateTime dueDateTime = parseDateAndTime(deadlineStrings[0]);
+                        return new AddCommand(new RecurringDeadline(
+                                words[0], false, dueDateTime, deadlineStrings[1]));
+                    } catch (Exception e) {
+                        // Otherwise parse as date only
+                        LocalDate dueDate = parseDateOnly(deadlineStrings[0]);
+                        return new AddCommand(new RecurringDeadline(
+                                words[0], false, dueDate, deadlineStrings[1]));
+                    }
+                } else {
+                    try {
+                        // Try to parse with datetime
+                        LocalDateTime dueDateTime = parseDateAndTime(deadlineStrings[0]);
+                        return new AddCommand(new Deadline(words[0], false, dueDateTime));
+                    } catch (Exception e) {
+                        // Otherwise parse as date only
+                        LocalDate dueDate = parseDateOnly(deadlineStrings[0]);
+                        return new AddCommand(new Deadline(words[0], false, dueDate));
+                    }
                 }
+
             case EVENT:
                 if (words.length == 1) {
                     throw new RebootException(
@@ -119,16 +150,35 @@ public class Parser {
                             "Proper usage: event {description} /from {start date} /to {end date}");
                 }
 
-                try {
-                    // Try to parse with datetime
-                    LocalDateTime startDateTime = parseDateAndTime(dates[0]);
-                    LocalDateTime endDateTime = parseDateAndTime(dates[1]);
-                    return new AddCommand(new Event(description, false, startDateTime, endDateTime));
-                } catch (Exception e) {
-                    // Otherwise parse as date only
-                    LocalDate startDate = parseDateOnly(dates[0]);
-                    LocalDate endDate = parseDateOnly(dates[1]);
-                    return new AddCommand(new Event(description, false, startDate, endDate));
+                String[] eventStrings = dates[1].split(" /recurring ", 2);
+
+                boolean isRecurringEvent = eventStrings.length != 1;
+
+                if (isRecurringEvent) {
+                    try {
+                        // Try to parse with datetime
+                        LocalDateTime startDateTime = parseDateAndTime(dates[0]);
+                        LocalDateTime endDateTime = parseDateAndTime(eventStrings[0]);
+                        return new AddCommand(new RecurringEvent(
+                                description, false, startDateTime, endDateTime, eventStrings[1]));
+                    } catch (Exception e) {
+                        // Otherwise parse as date only
+                        LocalDate dueDate = parseDateOnly(eventStrings[0]);
+                        return new AddCommand(new RecurringDeadline(
+                                description, false, dueDate, eventStrings[1]));
+                    }
+                } else {
+                    try {
+                        // Try to parse with datetime
+                        LocalDateTime startDateTime = parseDateAndTime(dates[0]);
+                        LocalDateTime endDateTime = parseDateAndTime(eventStrings[0]);
+                        return new AddCommand(new Event(description, false, startDateTime, endDateTime));
+                    } catch (Exception e) {
+                        // Otherwise parse as date only
+                        LocalDate startDate = parseDateOnly(dates[0]);
+                        LocalDate endDate = parseDateOnly(eventStrings[0]);
+                        return new AddCommand(new Event(description, false, startDate, endDate));
+                    }
                 }
             case DELETE:
                 if (Parser.isNotInteger(words[1])) {
@@ -172,7 +222,6 @@ public class Parser {
         } catch (NumberFormatException e) {
             return true;
         }
-
     }
 
     /**

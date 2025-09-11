@@ -14,6 +14,9 @@ import reboot.task.Deadline;
 import reboot.task.Event;
 import reboot.task.Task;
 import reboot.task.Todo;
+import reboot.task.reccuring.RecurringDeadline;
+import reboot.task.reccuring.RecurringEvent;
+import reboot.task.reccuring.RecurringTodo;
 
 /**
  * Represents a storage location that will deal with writing to
@@ -120,6 +123,24 @@ public class Storage {
                 return Optional.of(new Event(description, status,
                         Parser.parseDateAndTime(parts[3]), Parser.parseDateAndTime(parts[4])));
             }
+        case "RT":
+            return Optional.of(new RecurringTodo(description, status, parts[3]));
+        case "RD":
+            try {
+                return Optional.of(new RecurringDeadline(description, status,
+                        Parser.parseDateOnly(parts[3]), parts[4]));
+            } catch (Exception e) {
+                return Optional.of(new RecurringDeadline(description, status,
+                        Parser.parseDateAndTime(parts[3]), parts[4]));
+            }
+        case "RE":
+            try {
+                return Optional.of(new RecurringEvent(description, status,
+                        Parser.parseDateOnly(parts[3]), Parser.parseDateOnly(parts[4]), parts[5]));
+            } catch (Exception e) {
+                return Optional.of(new RecurringEvent(description, status,
+                        Parser.parseDateAndTime(parts[3]), Parser.parseDateAndTime(parts[4]), parts[5]));
+            }
         default:
             return Optional.empty();
         }
@@ -129,7 +150,8 @@ public class Storage {
             List<String> lines) {
         return lines.stream()
                 .filter(line -> line.startsWith("T") || line.startsWith("E")
-                        || line.startsWith("D"))
+                        || line.startsWith("D") || line.startsWith("RT")
+                        || line.startsWith("RE") || line.startsWith("RD"))
                 .map(Storage::createTask)
                 .filter(Optional::isPresent)
                 .flatMap(Optional::stream)

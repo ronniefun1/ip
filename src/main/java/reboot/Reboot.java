@@ -26,6 +26,7 @@ public class Reboot {
 
         try {
             tasks = new TaskList(storage.load());
+            tasks.updateTasks();
         } catch (IOException e) {
             gui.showError("Error reading file. Will start with a new tasklist");
             tasks = new TaskList();

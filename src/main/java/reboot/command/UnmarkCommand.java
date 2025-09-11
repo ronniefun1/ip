@@ -38,6 +38,7 @@ public class UnmarkCommand extends Command {
 
         assert index >= 0 && index < tasks.size() : "Delete index out of bounds";
 
+        tasks.updateTasks();
         Task t = tasks.get(index - 1);
         t.unmark();
         storage.writeFile(tasks.getAll());
