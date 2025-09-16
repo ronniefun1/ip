@@ -24,7 +24,7 @@ public class ListCommand extends Command {
         if (tasks.isEmpty()) {
             return gui.showMessage("List function is useless without any tasks");
         } else {
-            tasks.updateTasks();
+            tasks.updateRecurringTasks();
             return gui.showTaskList(tasks);
         }
     }

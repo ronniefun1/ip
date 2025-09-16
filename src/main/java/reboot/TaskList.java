@@ -110,7 +110,10 @@ public class TaskList {
         return results;
     }
 
-    public void updateTasks() {
+    /**
+     * Updates recurring tasks to their updated deadlines.
+     */
+    public void updateRecurringTasks() {
         for (Task task : tasks) {
             if (task instanceof Todo) {
                 updateRecurringTodo((Todo) task);
