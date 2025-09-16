@@ -3,6 +3,7 @@ package reboot;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import reboot.command.AddCommand;
 import reboot.command.ClearCommand;
@@ -76,6 +77,9 @@ public class Parser {
                 boolean isRecurringTodo = todoStrings.length != 1;
 
                 if (isRecurringTodo) {
+                    if (isNotValidRecurrence(todoStrings[1])) {
+                        return new ErrorCommand("Only daily/monthly/yearly recurrence is supported");
+                    }
                     return new AddCommand(new RecurringTodo(todoStrings[0], false, todoStrings[1]));
                 } else {
                     return new AddCommand(new Todo(words[1], false));
@@ -100,14 +104,23 @@ public class Parser {
                 boolean isRecurringDeadline = deadlineStrings.length != 1;
 
                 if (isRecurringDeadline) {
+                    if (isNotValidRecurrence(deadlineStrings[1])) {
+                        return new ErrorCommand("Only daily/monthly/yearly recurrence is supported");
+                    }
                     try {
                         // Try to parse with datetime
                         LocalDateTime dueDateTime = parseDateAndTime(deadlineStrings[0]);
+                        if (isBeforeToday(dueDateTime)) {
+                            return new ErrorCommand("Deadline task is already over");
+                        }
                         return new AddCommand(new RecurringDeadline(
                                 words[0], false, dueDateTime, deadlineStrings[1]));
                     } catch (Exception e) {
                         // Otherwise parse as date only
                         LocalDate dueDate = parseDateOnly(deadlineStrings[0]);
+                        if (isBeforeToday(dueDate)) {
+                            return new ErrorCommand("Deadline task is already over");
+                        }
                         return new AddCommand(new RecurringDeadline(
                                 words[0], false, dueDate, deadlineStrings[1]));
                     }
@@ -115,14 +128,19 @@ public class Parser {
                     try {
                         // Try to parse with datetime
                         LocalDateTime dueDateTime = parseDateAndTime(deadlineStrings[0]);
+                        if (isBeforeToday(dueDateTime)) {
+                            return new ErrorCommand("Deadline task is already over");
+                        }
                         return new AddCommand(new Deadline(words[0], false, dueDateTime));
                     } catch (Exception e) {
                         // Otherwise parse as date only
                         LocalDate dueDate = parseDateOnly(deadlineStrings[0]);
+                        if (isBeforeToday(dueDate)) {
+                            return new ErrorCommand("Deadline task is already over");
+                        }
                         return new AddCommand(new Deadline(words[0], false, dueDate));
                     }
                 }
-
             case EVENT:
                 if (words.length == 1) {
                     throw new RebootException(
@@ -155,28 +173,45 @@ public class Parser {
                 boolean isRecurringEvent = eventStrings.length != 1;
 
                 if (isRecurringEvent) {
+                    if (isNotValidRecurrence(eventStrings[1])) {
+                        return new ErrorCommand("Only daily/monthly/yearly recurrence is supported");
+                    }
                     try {
                         // Try to parse with datetime
                         LocalDateTime startDateTime = parseDateAndTime(dates[0]);
                         LocalDateTime endDateTime = parseDateAndTime(eventStrings[0]);
+                        if (isBeforeToday(startDateTime) || isBeforeToday(endDateTime)) {
+                            return new ErrorCommand("Event is already over");
+                        }
                         return new AddCommand(new RecurringEvent(
                                 description, false, startDateTime, endDateTime, eventStrings[1]));
                     } catch (Exception e) {
                         // Otherwise parse as date only
-                        LocalDate dueDate = parseDateOnly(eventStrings[0]);
-                        return new AddCommand(new RecurringDeadline(
-                                description, false, dueDate, eventStrings[1]));
+                        LocalDate startDate = parseDateOnly(dates[0]);
+                        LocalDate endDate = parseDateOnly(eventStrings[0]);
+                        if (isBeforeToday(startDate) || isBeforeToday(endDate)) {
+                            return new ErrorCommand("Event is already over");
+                        }
+                        return new AddCommand(new RecurringEvent(
+                                description, false, startDate, endDate, eventStrings[1]));
                     }
                 } else {
                     try {
                         // Try to parse with datetime
                         LocalDateTime startDateTime = parseDateAndTime(dates[0]);
                         LocalDateTime endDateTime = parseDateAndTime(eventStrings[0]);
+                        if (isBeforeToday(startDateTime) || isBeforeToday(endDateTime)) {
+                            return new ErrorCommand("Event is already over");
+                        }
+                        if (isBeforeToday(startDateTime) || isBeforeToday(endDateTime)) {
+                            return new ErrorCommand("Event is already over");
+                        }
                         return new AddCommand(new Event(description, false, startDateTime, endDateTime));
                     } catch (Exception e) {
                         // Otherwise parse as date only
                         LocalDate startDate = parseDateOnly(dates[0]);
                         LocalDate endDate = parseDateOnly(eventStrings[0]);
+
                         return new AddCommand(new Event(description, false, startDate, endDate));
                     }
                 }
@@ -202,8 +237,10 @@ public class Parser {
 
                 return new FindCommand(words[1]);
             default:
-                return new ErrorCommand("I do not understand your language");
+                return new ErrorCommand("Invalid input, check the user guide for proper inputs.");
             }
+        } catch (DateTimeParseException e) {
+            return new ErrorCommand("Date Time format: dd mm yyyy HHmm");
         } catch (RebootException e) {
             return new ErrorCommand(e.getMessage());
         } catch (IllegalArgumentException e) {
@@ -211,6 +248,13 @@ public class Parser {
         }
     }
 
+
+    /**
+     * Checks if a string is a valid integer.
+     * @param str String to be converted to integer.
+     *
+     * @return true if str is an integer, false otherwise.
+     */
     public static boolean isNotInteger(String str) {
         if (str == null || str.isEmpty()) {
             return true;
@@ -271,5 +315,18 @@ public class Parser {
             }
         }
         throw new IllegalArgumentException("Invalid date format.");
+    }
+
+    public static boolean isBeforeToday(LocalDate date) {
+        return date.isBefore(LocalDate.now());
+    }
+
+    public static boolean isBeforeToday(LocalDateTime date) {
+        return date.isBefore(LocalDateTime.now());
+    }
+
+    public static boolean isNotValidRecurrence(String str) {
+        str = str.toLowerCase();
+        return str.equals("daily") || str.equals("monthly") || str.equals("yearly");
     }
 }
