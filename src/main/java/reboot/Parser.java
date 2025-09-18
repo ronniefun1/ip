@@ -86,7 +86,7 @@ public class Parser {
 
                 if (isRecurringTodo) {
                     if (isNotValidRecurrence(todoStrings[1])) {
-                        return new ErrorCommand("Only daily/monthly/yearly recurrence is supported");
+                        return new ErrorCommand("Only daily/weekly/monthly recurrence is supported");
                     }
                     return new AddCommand(new RecurringTodo(todoStrings[0], false, todoStrings[1]));
                 } else {
@@ -113,7 +113,7 @@ public class Parser {
 
                 if (isRecurringDeadline) {
                     if (isNotValidRecurrence(deadlineStrings[1])) {
-                        return new ErrorCommand("Only daily/monthly/yearly recurrence is supported");
+                        return new ErrorCommand("Only daily/weekly/monthly recurrence is supported");
                     }
                     try {
                         // Try to parse with datetime
@@ -182,7 +182,7 @@ public class Parser {
 
                 if (isRecurringEvent) {
                     if (isNotValidRecurrence(eventStrings[1])) {
-                        return new ErrorCommand("Only daily/monthly/yearly recurrence is supported");
+                        return new ErrorCommand("Only daily/weekly/monthly recurrence is supported");
                     }
                     try {
                         // Try to parse with datetime
@@ -338,6 +338,6 @@ public class Parser {
 
     public static boolean isNotValidRecurrence(String str) {
         str = str.toLowerCase();
-        return str.equals("daily") || str.equals("monthly") || str.equals("yearly");
+        return !(str.equals("daily") || str.equals("monthly") || str.equals("weekly"));
     }
 }

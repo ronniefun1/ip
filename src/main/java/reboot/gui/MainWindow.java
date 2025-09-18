@@ -24,7 +24,7 @@ public class MainWindow extends AnchorPane {
 
     private Reboot reboot;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
     private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/Reboot.png"));
 
     @FXML
