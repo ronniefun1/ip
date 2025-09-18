@@ -20,6 +20,10 @@ public class RecurringTodo extends Todo {
         this.startDate = date;
     }
 
+    /**
+     * Checks if the deadline day has passed and auto-update to the next occurrence.
+     * Unmarks the task.
+     */
     public void updateDateIfOverdue() {
         LocalDate today = LocalDate.now();
         while (startDate.isBefore(today)) {

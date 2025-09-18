@@ -23,7 +23,8 @@ public class RecurringDeadline extends Deadline {
     }
 
     /**
-     * Check if the deadline day has passed and auto-update to the next occurrence.
+     * Checks if the deadline day has passed and auto-update to the next occurrence.
+     * Unmarks the task.
      */
     public void updateDateIfOverdue() {
         LocalDate today = LocalDate.now();
@@ -46,7 +47,8 @@ public class RecurringDeadline extends Deadline {
     }
 
     /**
-     * Check if the deadline day and time has passed and auto-update to the next occurrence.
+     * Checks if the deadline day and time has passed and auto-update to the next occurrence.
+     * Unmarks the task.
      */
     public void updateDateTimeIfOverdue() {
         LocalDateTime today = LocalDateTime.now();
