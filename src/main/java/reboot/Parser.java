@@ -19,9 +19,9 @@ import reboot.command.UnmarkCommand;
 import reboot.task.Deadline;
 import reboot.task.Event;
 import reboot.task.Todo;
-import reboot.task.reccuring.RecurringDeadline;
-import reboot.task.reccuring.RecurringEvent;
-import reboot.task.reccuring.RecurringTodo;
+import reboot.task.recurring.RecurringDeadline;
+import reboot.task.recurring.RecurringEvent;
+import reboot.task.recurring.RecurringTodo;
 
 /**
  * Represents a parser that will make sense of user input.

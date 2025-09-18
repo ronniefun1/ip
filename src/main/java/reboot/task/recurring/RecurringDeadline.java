@@ -1,4 +1,4 @@
-package reboot.task.reccuring;
+package reboot.task.recurring;
 
 import reboot.task.Deadline;
 

@@ -125,4 +125,13 @@ public class TaskListTest {
 
         assertTrue(tasks.isOutOfRange(4));
     }
+
+    // Test recommended by ChatGPT for the findTask function in TaskList.java
+    @Test
+    public void findTask_returnsCorrectTasks() {
+        TaskList tasks = new TaskList();
+        tasks.add(new Todo("read book", false));
+        tasks.add(new Todo("write essay", false));
+        assertEquals(1, tasks.findTasks("book").size());
+    }
 }
