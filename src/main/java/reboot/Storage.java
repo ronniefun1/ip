@@ -10,15 +10,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import reboot.command.Command;
-import reboot.command.ErrorCommand;
 import reboot.task.Deadline;
 import reboot.task.Event;
 import reboot.task.Task;
 import reboot.task.Todo;
-import reboot.task.reccuring.RecurringDeadline;
-import reboot.task.reccuring.RecurringEvent;
-import reboot.task.reccuring.RecurringTodo;
+import reboot.task.recurring.RecurringDeadline;
+import reboot.task.recurring.RecurringEvent;
+import reboot.task.recurring.RecurringTodo;
 
 /**
  * Represents a storage location that will deal with writing to

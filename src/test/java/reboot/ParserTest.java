@@ -27,7 +27,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parse_todoCommand_returnsAddCommand() throws Exception {
+    public void parse_validTodo_returnsAddCommand() throws Exception {
         Command c = Parser.parse("todo Read book");
         assertTrue(c instanceof AddCommand);
     }
@@ -38,8 +38,8 @@ public class ParserTest {
     }
 
     @Test
-    public void parse_deadlineCommand_returnsAddCommand() throws Exception {
-        Command c = Parser.parse("deadline Read book /by 02 09 2025");
+    public void parse_validDeadline_returnsAddCommand() throws Exception {
+        Command c = Parser.parse("deadline Read book /by 20 09 2026");
         assertTrue(c instanceof AddCommand);
     }
 

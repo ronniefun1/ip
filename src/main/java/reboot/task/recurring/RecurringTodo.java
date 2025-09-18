@@ -1,4 +1,4 @@
-package reboot.task.reccuring;
+package reboot.task.recurring;
 
 import reboot.task.Todo;
 
@@ -38,6 +38,10 @@ public class RecurringTodo extends Todo {
                 throw new IllegalArgumentException("Unknown recurrence: " + frequency);
             }
         }
+    }
+
+    public LocalDate getStartDate() {
+        return this.startDate;
     }
 
     @Override
