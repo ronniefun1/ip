@@ -34,14 +34,12 @@ public class DeleteCommand extends Command {
     public String execute(TaskList tasks, Gui gui, Storage storage) throws RebootException {
 
         if (tasks == null) {
-            throw new RebootException("Unable to delete from empty list");
+            return gui.showError("Unable to delete from empty list");
         }
 
         if (tasks.isOutOfRange(index)) {
-            throw new RebootException("Only numbers from 1 to " + tasks.size() + " are allowed");
+            return gui.showError("Please check the index provided");
         }
-
-        assert index >= 0 && index < tasks.size() + 1 : "Delete index out of bounds";
 
         Task t = tasks.get(index - 1);
         tasks.remove(t);

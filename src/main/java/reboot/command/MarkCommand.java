@@ -33,11 +33,13 @@ public class MarkCommand extends Command {
     @Override
     public String execute(TaskList tasks, Gui gui, Storage storage) throws RebootException {
 
-        if (tasks.isOutOfRange(index)) {
-            throw new RebootException("Only numbers from 1 to " + tasks.size() + " are allowed");
+        if (tasks == null) {
+            return gui.showError("Unable to mark from empty list");
         }
 
-        assert index >= 0 && index < tasks.size() : "Delete index out of bounds";
+        if (tasks.isOutOfRange(index)) {
+            return gui.showError("Please check the index provided");
+        }
 
         tasks.updateRecurringTasks();
         Task t = tasks.get(index - 1);

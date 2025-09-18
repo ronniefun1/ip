@@ -44,6 +44,10 @@ public class Parser {
             case LIST:
                 return new ListCommand();
             case MARK:
+                if (words.length == 1) {
+                    throw new RebootException("Proper usage: mark {task index}");
+                }
+
                 if (Parser.isNotInteger(words[1])) {
                     throw new RebootException("Proper usage: mark {task index}");
                 }
@@ -56,6 +60,10 @@ public class Parser {
 
                 return new MarkCommand(Integer.parseInt(words[1]));
             case UNMARK:
+                if (words.length == 1) {
+                    throw new RebootException("Proper usage: unmark {task index}");
+                }
+
                 if (Parser.isNotInteger(words[1])) {
                     throw new RebootException("Proper usage: unmark {task index}");
                 }
@@ -216,6 +224,10 @@ public class Parser {
                     }
                 }
             case DELETE:
+                if (words.length == 1) {
+                    throw new RebootException("Proper usage: delete {task index}");
+                }
+
                 if (Parser.isNotInteger(words[1])) {
                     throw new RebootException("Proper usage: delete {task index}");
                 }
@@ -247,7 +259,6 @@ public class Parser {
             return new ErrorCommand("I do not understand your language");
         }
     }
-
 
     /**
      * Checks if a string is a valid integer.
