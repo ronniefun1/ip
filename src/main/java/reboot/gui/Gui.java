@@ -12,7 +12,7 @@ public class Gui {
      * Prints the welcome message to the user.
      */
     public String showWelcome() {
-        return "Hello! I'm reboot.Reboot the best chatbot\n"
+        return "Hello! I'm Reboot the best chatbot\n"
                 + "What can the best chatbot do for you?";
     }
 
