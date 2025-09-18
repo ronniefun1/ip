@@ -30,6 +30,9 @@ public class FindCommand extends Command {
     @Override
     public String execute(TaskList tasks, Gui gui, Storage storage) throws RebootException {
 
+        if (tasks.isEmpty()) {
+            return gui.showError("Find function is useless without any tasks");
+        }
         tasks.updateRecurringTasks();
         TaskList results = tasks.findTasks(keyword);
 

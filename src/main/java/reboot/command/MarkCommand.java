@@ -33,8 +33,8 @@ public class MarkCommand extends Command {
     @Override
     public String execute(TaskList tasks, Gui gui, Storage storage) throws RebootException {
 
-        if (tasks == null) {
-            return gui.showError("Unable to mark from empty list");
+        if (tasks.isEmpty()) {
+            return gui.showError("Mark function is useless without any tasks");
         }
 
         if (tasks.isOutOfRange(index)) {

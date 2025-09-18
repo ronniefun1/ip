@@ -32,8 +32,8 @@ public class UnmarkCommand extends Command {
     @Override
     public String execute(TaskList tasks, Gui gui, Storage storage) throws RebootException {
 
-        if (tasks == null) {
-            return gui.showError("Unable to unmark from empty list");
+        if (tasks.isEmpty()) {
+            return gui.showError("Unmark function is useless without any tasks");
         }
 
         if (tasks.isOutOfRange(index)) {
