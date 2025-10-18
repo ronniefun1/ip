@@ -1,15 +1,21 @@
 package reboot.task.recurring;
 
-import reboot.task.Todo;
-
 import java.time.LocalDate;
 
+import reboot.task.Todo;
+
+/**
+ * Represents a repeating basic task that has to be done.
+ */
 public class RecurringTodo extends Todo {
 
     // Only "daily", "weekly", "monthly" is accepted for now
     private final String frequency;
     private LocalDate startDate;
 
+    /**
+     * Creates a RecurringTodo with the specified frequency to repeat.
+     */
     public RecurringTodo(String description, boolean isDone, String frequency) {
         super(description, isDone);
         this.frequency = frequency;

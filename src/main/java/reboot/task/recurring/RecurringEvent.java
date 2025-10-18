@@ -1,21 +1,30 @@
 package reboot.task.recurring;
 
-import reboot.task.Event;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import reboot.task.Event;
+
+/**
+ * Represents a repeating task that has a start time and end time.
+ */
 public class RecurringEvent extends Event {
 
     // Only "daily", "weekly", "monthly" is accepted for now
     private final String frequency;
 
+    /**
+     * Creates a RecurringEvent that has a start date and end date.
+     */
     public RecurringEvent(String description, boolean isDone, LocalDate start, LocalDate end,
                           String frequency) {
         super(description, isDone, start, end);
         this.frequency = frequency;
     }
 
+    /**
+     * Creates a RecurringEvent that has a start and end date and time.
+     */
     public RecurringEvent(String description, boolean isDone, LocalDateTime start, LocalDateTime end,
                           String frequency) {
         super(description, isDone, start, end);

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import reboot.command.Command;
 import reboot.gui.Gui;
+import reboot.parser.Parser;
 
 /**
  * Represents a chatbot that will be able to track tasks.

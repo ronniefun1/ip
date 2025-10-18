@@ -1,21 +1,30 @@
 package reboot.task.recurring;
 
-import reboot.task.Deadline;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import reboot.task.Deadline;
+
+/**
+ * Represents a repeating task that has a deadline.
+ */
 public class RecurringDeadline extends Deadline {
 
     // Only "daily", "weekly", "monthly" is accepted for now
     private final String frequency;
 
+    /**
+     * Creates a RecurringDeadline with the specified due date.
+     */
     public RecurringDeadline(String description, boolean isDone, LocalDate dueDate,
                              String frequency) {
         super(description, isDone, dueDate);
         this.frequency = frequency.toLowerCase();
     }
 
+    /**
+     * Creates a RecurringDeadline with the specified due date and time.
+     */
     public RecurringDeadline(String description, boolean isDone, LocalDateTime dueDateTime,
                              String frequency) {
         super(description, isDone, dueDateTime);
