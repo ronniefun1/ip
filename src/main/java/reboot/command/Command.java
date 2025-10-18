@@ -12,8 +12,7 @@ import reboot.gui.Gui;
 public abstract class Command {
 
     /**
-     * Abstract method to execute the command.
-     * Subclasses must provide their own implementation for commands.
+     * Executes the given command.
      */
     public abstract String execute(TaskList tasks, Gui ui, Storage storage) throws RebootException;
 
